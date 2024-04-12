@@ -1,0 +1,3 @@
+ SELECT decrypt(parola,decode('password','escape'),'aes') 
+ from chiavi 
+ where codcliente=1;

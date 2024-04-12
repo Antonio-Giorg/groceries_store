@@ -1,0 +1,584 @@
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: "Fira Sans", sans-serif;
+	font-weight: normal;
+	font-style: normal;
+	color: rgba(0, 0, 0, 0.7);
+	overflow-x: hidden;
+	margin: 0px;
+	height: 100%;
+}
+
+
+
+.Titolo_Carousel {
+	position: absolute;
+	top: 280px;
+	left: 20%;
+	right: 20%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 3vw;
+	font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+	text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+
+}
+
+
+/*gestione bottone dona con animazione*/
+.dona {
+	border-radius: 100px;
+	border-color: #24c43f;
+	color: #fff;
+	box-shadow: 0 0 40px 40px #12af2f inset, 0 0 0 0 #056f15;
+	transition: all 150ms ease-in-out;
+	z-index: 3;
+	position: absolute;
+	width: 400px;
+	height: 100px;
+	text-align: center;
+	padding-top: 27px;
+	top: 430px;
+	z-index: 1;
+	right: 100px;
+	font-style: italic;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: xx-large;
+	font-weight: bold;
+}
+
+.dona:hover {
+	box-shadow: 0 0 120px 0 #0dbe3a inset, 0 0 10px 4px #046c20;
+}
+
+.contenitore {
+	display: flex;
+	margin: 0px;
+	width: 1920px;
+	height: 700px;
+	background: rgba(29, 151, 18, 0.2);
+}
+
+.foto {
+	display: block;
+	margin-top: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1400px;
+	height: 600px;
+	border-radius: 12px;
+}
+
+video {
+	border-top: 0px;
+	object-fit: fill;
+	z-index: -1;
+	width: 100%;
+	height: 600px;
+}
+
+
+
+/*inizio sezione statistiche*/
+
+
+.display-1 {
+	font-size: 3.5vw;
+	text-align: center;
+	width: 100%;
+	margin-bottom: 30px;
+	color: green;
+
+	font-weight: bold;
+	text-shadow: 4px 0 0 rgb(0, 0, 0);
+
+}
+.display-n {
+	font-size: 3.5vw;
+	text-align: center;
+	width: 100%;
+	margin-bottom: 30px;
+	color: green;
+
+	font-weight: bold;
+	text-shadow: 2px 0 0 rgb(0, 0, 0);
+
+}
+/*statistiche iniziali*/
+
+.statistiche .container {
+	position: absolute;
+	top: 1500px;
+	left: 14%;
+	text-align: center;
+	width: 100%;
+	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.tabella .grid-container {
+	margin-top: 65px;
+}
+
+.grid-container {
+	width: 100%;
+	height: 300px;
+	display: grid;
+	grid-template-columns: auto auto auto;
+
+}
+
+
+.grid-item {
+	background-color: rgba(255, 255, 255, 0.8);
+	border: 0px solid rgba(0, 0, 0, 0.8);
+	padding: 20px;
+	font-size: 30px;
+	text-align: center;
+}
+
+
+
+/*sezione relativa al programma*/
+
+#programma {
+
+	position: absolute;
+
+	width: 80%;
+	left: 5%;
+}
+
+.fotoProgramma {
+	width: 100%;
+}
+
+.textStat {
+	font-size: 1.65vw;
+	font-weight: bold;
+	color: #616161;
+	font-style: italic;
+
+}
+
+.datoStat {
+	font-size: 1.65vw;
+	margin-top: 3vw;
+	font-weight: bold;
+	color: #10ad27;
+}
+
+#carte {
+	position: relative;
+	margin-top: 10px;
+}
+
+#DivCarello {
+	background: linear-gradient(to right, rgba(2, 250, 85, 0.822), rgba(0, 255, 21, 0.548), rgba(201, 255, 7, 0.521));
+	width: 100%;
+
+}
+
+#logo {
+	width: 100%;
+}
+
+
+
+
+/*CSS delle Grid contenenti le voci della barra in alto, e delle loro carte:*/
+.grid {
+	display: grid;
+	background: -webkit-linear-gradient(left top, green, yellow);
+	grid-template-columns: repeat(19, 1fr);
+	grid-template-rows: repeat(5, 150px);
+}
+
+.item1 {
+	display: grid;
+	grid-column: 2 / 10;
+	grid-row: 2 / 5;
+
+	background: linear-gradient(to right, rgb(22, 255, 1, 0.2), rgb(248, 255, 44), rgb(20, 80, 3));
+
+}
+
+.item2 {
+	display: grid;
+	grid-column: 10 / 18;
+	grid-row: 2 / 5;
+
+}
+
+img {
+	width: 600px;
+	height: 100%;
+}
+
+#imgContorno {
+	width: 600px;
+	height: 100%;
+	border: 2px solid rgba(27, 116, 5, 0.685);
+	border-radius: 35px;
+}
+
+
+/*griglia per ogni sezione*/
+/*griglia che contiene tutte le sotto-griglie*/
+.Pparent {
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+.parent {
+	
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: repeat(11, 1fr);
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+	margin-bottom: 30px;
+
+}
+
+
+
+.div1 {
+
+	grid-area: 1 / 1 / 13 / 13;
+	background: linear-gradient(to right, rgba(154, 247, 4, 0.637), rgba(83, 248, 6, 0.74), rgba(116, 238, 2, 0.712));
+	border-radius: 35px 200px 30px;
+}
+
+.div2 {
+	grid-area: 3 / 3 / 10 / 8;
+
+}
+
+.div3 {
+	grid-area: 3 / 8 / 10 / 12;
+}
+
+.div4 {
+	grid-area: 4 / 9 / 6 / 11;
+	text-align: center;
+}
+
+.div5 {
+	grid-area: 5 / 8 / 9 / 12;
+	text-align: center;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+.Programma {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: repeat(12, 1fr);
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+	margin-bottom: 30px;
+
+
+}
+
+.div1P {
+
+	background: linear-gradient(to right, rgba(154, 247, 4, 0.637), rgba(83, 248, 6, 0.74), rgba(116, 238, 2, 0.712));
+	border-radius: 35px 200px 30px;
+	grid-area: 1 / 1 / 13 / 13;
+}
+
+.div2P {
+	grid-area: 3 / 3 / 11 / 11;
+	border-radius: 5%;
+}
+
+.Contattaci {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: repeat(12, 1fr);
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+	margin-bottom: 30px;
+
+	
+}
+
+.div1C {
+	background: linear-gradient(to right, rgba(56, 226, 4, 0.685), rgba(36, 197, 49, 0.712), rgba(109, 238, 4, 0.603));
+	grid-area: 1 / 1 / 13 / 13;
+	border-radius: 35px 200px 30px;
+}
+
+.div2C {
+	border-radius: 5%;
+	grid-area: 3 / 3 / 11 / 11;
+}
+
+.News {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: repeat(12, 1fr);
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+	
+	margin-bottom: 30px;
+}
+
+.div1N {
+	background: linear-gradient(to right, rgba(3, 158, 11, 0.671), rgba(7, 185, 87, 0.856), rgba(10, 240, 2, 0.671));
+	grid-area: 1 / 1 / 13 / 13;
+	border-radius: 35px 200px 30px;
+}
+
+.div2N {
+	border-radius: 5%;
+	grid-area: 3 / 3 / 11 / 11;
+}
+
+.tit{
+	font-size: x-large;
+	color: rgb(255, 255, 255);
+	font-weight: bold;
+	width: 400px;
+
+	color: green;
+
+	font-weight: bold;
+	text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+  
+}
+
+.descrizione{
+	font-family:'Times New Roman', Times, serif;
+	font-weight: bold;
+	font-style: italic;
+	font-size: large;
+	
+}
+.card{
+	box-shadow: 5px 2px 48px 4px #000000;
+	border-radius: 20px;
+
+}
+
+.card-title{
+	font-weight: bolder;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size:x-large;
+	text-shadow:2px 6px 12px rgb(108, 108, 108);
+}
+.card-text{
+	
+	font-weight: bold;
+	color: #097034;
+}
+.card-img{
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	border-radius: 20px;
+	
+}
+
+
+/*grafici goal*/
+
+
+.semi-donut {
+
+	--percentage: 0;
+	--fill: rgb(21, 106, 226);
+	width: 100%;
+	height: 150px;
+	position: relative;
+	color: rgb(28, 211, 199);
+	font-size: 22px;
+	font-weight: 800;
+	overflow: hidden;
+	color: var(--fill);
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+
+}
+
+.semi-donut:after {
+	content: '';
+	width: 300px;
+	height: 300px;
+	border: 50px solid;
+	border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) var(--fill) var(--fill);
+	position: absolute;
+	border-radius: 50%;
+	top: 0;
+	box-sizing: border-box;
+	transform: rotate(calc(1deg * (-45 + var(--percentage) * 1.8)));
+
+}
+
+.container-lg{
+	margin-top: 1vw; 
+	margin-bottom: 1vw;
+}
+
+
+
+
+/*inizio media query*/
+@media screen and (max-width: 800px) {
+	.main-menu a {
+		text-align: left;
+		font-size: 2vw;
+
+	}
+
+	.main-menu .titolo {
+		margin-top: 9px;
+		font-size: 3vw;
+		font-weight: 210;
+		width: 175px;
+
+	}
+
+	.prima .container {
+		top: 50%;
+		width: 50%;
+
+	}
+
+	.slogan {
+		font-size: 5vw;
+	}
+
+	.Titolo_Carousel {
+		position: absolute;
+		top: 40%;
+		font-size: 6.55vw;
+	}
+
+}
+
+
+@media screen and (max-width: 350px) {
+	#logo {
+		width: 90vw;
+	}
+	.display-n {
+
+		text-shadow: 0px 0 0 rgb(0, 0, 0);
+	
+	}
+	#testo {
+
+		font-size: 5vW;
+
+	}
+	.nav-link {
+		font-size: 5vw;
+	
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.card-text {
+		font-size: 3.1vw;
+	}
+
+	.card-title {
+		font-size: 3.6vw;
+	}
+
+	.display-1 {
+		text-shadow: 0px 0 0 rgb(0, 0, 0);
+	
+	}
+}
+
+@media screen and (max-width: 645px) {
+	.slogan {
+		top: 280px;
+		font-size: 6.55vw;
+	}
+
+	.Titolo_Carousel {
+		position: absolute;
+		top: 40%;
+		font-size: 6.55vw;
+	}
+
+	#stat {
+		margin-bottom: -90px;
+	}
+
+	#logo {
+		margin-left: 9%;
+	}
+}
+
+
+@media screen and (max-width: 1200px) {
+	video {
+		top: -20px;
+		object-fit: none;
+	}
+
+	.dona {
+		position: absolute;
+		top: 395px;
+		right: 5%;
+		height: 7vw;
+		width: 25vw;
+		font-size: 3vw;
+		;
+		padding-top: 1.5vw;
+	}
+
+	.prima .container {
+		top: 50%;
+		width: 50%;
+
+	}
+
+	.textStat {
+		font-size: 3.55vw;
+
+	}
+
+	.datoStat {
+		font-size: 3.55vw;
+		margin-top: 3vw;
+	}
+
+	.display-1 {
+		font-size: 6vw;
+		text-align: center;
+		width: 100%;
+		
+
+	}
+
+	.slogan {
+		font-size: 5vw;
+	}
+
+	.Titolo_Carousel {
+		position: absolute;
+		top: 40%;
+		font-size: 6.55vw;
+	}
+
+
+	.citazione {
+		font-size: 3.5vw;
+		margin-top: 7.5vw;
+		margin-bottom: 7.5vw;
+	}
+
+}
+
