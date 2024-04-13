@@ -4,7 +4,7 @@ session_start();
                            
             $a=$_COOKIE['PHPSESSID'];
                
-           $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");$queryRemember = 'SELECT *
+           $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");$queryRemember = 'SELECT *
             from utente inner join identificativo on utente.codice = identificativo.codcliente
             where identificativo.codice = $1';
             $resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
@@ -61,7 +61,7 @@ session_start();
                 $codice=$_COOKIE["codice"];
             }
             
-           $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");$query = 'SELECT prodotto.nome, tipologia.*,transazione.scadenza,transazione.quantità, transazione.momento, transazione.via,transazione.ritiro
+           $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");$query = 'SELECT prodotto.nome, tipologia.*,transazione.scadenza,transazione.quantità, transazione.momento, transazione.via,transazione.ritiro
                       from tipologia, transazione inner join prodotto on transazione.codprodotto=prodotto.codice
                       where codcliente=$1 and tipologia.categoria=prodotto.codtipologia
                       ORDER BY transazione.momento DESC';
@@ -82,7 +82,7 @@ session_start();
         <div class="row" id="riga">
             <div class="col-6" id="statistiche">
                 <?php
-               $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");    $query = 'SELECT sum(transazione.quantità), tipologia.categoria
+               $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");    $query = 'SELECT sum(transazione.quantità), tipologia.categoria
                           from tipologia, transazione inner join prodotto on transazione.codprodotto=prodotto.codice
                           where codcliente=$1 and tipologia.categoria=prodotto.codtipologia
                           group by tipologia.categoria';

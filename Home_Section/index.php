@@ -13,7 +13,7 @@ session_start();
                
 $a=$_COOKIE['PHPSESSID'];
                
-$dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
 $queryRemember = 'SELECT *
 from utente inner join identificativo on utente.codice = identificativo.codcliente
 where identificativo.codice = $1';
@@ -69,7 +69,7 @@ if(isset($_SESSION["nome"])){
 }
 
 
-$dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
 $query = 'select tipologia.categoria, count(transazione.*)
     from ((
     transazione inner join prodotto on transazione.codprodotto=prodotto.codice
@@ -305,7 +305,7 @@ foreach ($array2 as $key => $value) {
           <p class="textStat">QUANTITA' DI DONAZIONI (Kg): </p>
           <p class="datoStat display-n">
             <?php 
-            $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+            $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
             $query = 'select sum(quantità)
                       from ((transazione inner join prodotto on transazione.codprodotto=prodotto.codice) inner join tipologia on prodotto.codtipologia = tipologia.categoria)';
             $result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
@@ -322,7 +322,7 @@ foreach ($array2 as $key => $value) {
           <p class="textStat">NUMERO DI DONAZIONI EFFETTUATE: </p>
           <p class="datoStat display-n">
             <?php
-            $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+            $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
             $query = 'select count(*) from transazione';
             $result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
@@ -458,7 +458,7 @@ foreach ($array2 as $key => $value) {
     
 
 
-  $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+  $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
     $query5 = 'select tipologia.categoria, sum(transazione.quantità)
           from ((transazione inner join prodotto on transazione.codprodotto=prodotto.codice) inner join tipologia on prodotto.codtipologia = tipologia.categoria)
           group by tipologia.categoria';

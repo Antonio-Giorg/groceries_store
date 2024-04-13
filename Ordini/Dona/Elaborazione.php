@@ -2,7 +2,7 @@
 session_start();
 $a=$_COOKIE['PHPSESSID'];
                
-  $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+  $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
   $queryRemember = 'SELECT *
   from utente inner join identificativo on utente.codice = identificativo.codcliente
   where identificativo.codice = $1';
@@ -38,7 +38,7 @@ if (isset($_SESSION["codice"])){
 if (isset($_COOKIE["codice"])){
     $loggato = $_COOKIE["codice"];
 }
-$dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
 
 
 //Ci prendiamo i dati dei prodotti inseriti nel carrello dall'utente mediante una chiamata AJAX col GET dal JS, e mettiamo i dati dentro un array.

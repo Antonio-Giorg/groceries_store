@@ -1,6 +1,6 @@
 <!-- carciamento dati per il riempimento dei grafici -->
 <?php
-   $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+   $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
    $query5 = 'select tipologia.categoria, sum(transazione.quantità)
     from ((
     transazione inner join prodotto on transazione.codprodotto=prodotto.codice
@@ -87,7 +87,7 @@
                  
   $a=$_COOKIE['PHPSESSID'];
                
-  $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+  $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
  $queryRemember = 'SELECT *
   from utente inner join identificativo on utente.codice = identificativo.codcliente
   where identificativo.codice = $1';

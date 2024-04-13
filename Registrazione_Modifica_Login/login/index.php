@@ -9,7 +9,7 @@ $flag="nulla";
 
 #setcookie("abcdefgh", "ffffffffffffinale", time()+400,"/");
 
-$dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
 
 
     if (isset($_POST["submit"]) || isset($_POST["email"])) {
@@ -18,7 +18,7 @@ $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres passw
         $email = $_POST["email"];
         $password = $_POST["pswd"];
 
-        $query = 'SELECT * from utente where email=$1 AND pswd=$2';
+        $query = 'SELECT * from public.utente where email=$1 AND pswd=$2';
         //echo $email,hash('sha256',$password);
         $result = pg_query_params($dbconn, $query, array($email, hash('sha256',$password)));
         $tuple = "nulla";
@@ -82,7 +82,7 @@ $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres passw
                                                 $_SESSION['ricordami'] = 1;
 
                                             } else {
-                                                $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres password=password");
+                                                $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
                                                 
                                                 $id = session_id();
                                                 $codice = $_SESSION['codice'];
@@ -122,8 +122,8 @@ $dbconn = pg_connect("host=localhost dbname=LTW_DB port=5432 user=postgres passw
         }
     }
 
-    $queryRemember = 'SELECT utente.email, utente.pswd
-                from utente inner join identificativo on utente.codice = identificativo.codcliente
+    $queryRemember = 'SELECT public.utente.email, public.utente.pswd
+                from public.utente inner join identificativo on public.utente.codice = identificativo.codcliente
                 where identificativo.codice = $1';
     $resultRemember = pg_query_params($dbconn, $queryRemember, array(session_id()));
     $tupleRemember = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);

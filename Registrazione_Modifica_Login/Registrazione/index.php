@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_POST['submit'])){      
-    $dbconn = pg_connect("host=127.0.0.1 port=5432 dbname=LTW_DB user=postgres password=password");
+    $dbconn = pg_connect("host=127.0.0.1 port=5432 dbname=ltw_db user=postgres password=password");
 
     $email = $_POST["email"];
     $query = 'SELECT * from utente where email=$1';
@@ -77,12 +77,16 @@ if(isset($_POST['submit'])){
         $enc_pwd = hash('sha256',$pswd);
         $metodo = 'aes';
 
-        $query2 = 'INSERT INTO utente(nome,cognome,email,pswd,cap,cellulare,cf,città,via,regione) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+        $query2 = 'INSERT INTO public.utente(nome,cognome,email,pswd,cap,cellulare,cf,città,via,regione) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
         $result = pg_query_params($dbconn, $query2, array($nome,$cognome,$email,$enc_pwd,$cap,$cell,$cf,$città,$via,$regione));
         if ($result){
         
             header("location: ../login/index.php");
-        }else die("c'è stato un errore");
+        }else {
+            var_dump($result);
+            die("c'è stato un errore");
+        }
+        
         }
     }
 }
