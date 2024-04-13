@@ -5,7 +5,7 @@
     $a = $_COOKIE['PHPSESSID'];
 
     $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-    $queryRemember = "SELECT * FROM public.utente INNER JOIN public.identificativo ON public.utente.codice = public.identificativo.codcliente WHERE public.identificativo.codice = 9;";
+    $queryRemember = "SELECT * FROM public.utente INNER JOIN public.identificativo ON public.utente.codice = public.identificativo.codcliente WHERE public.identificativo.codice = $1;";
     $resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
     $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
@@ -61,7 +61,8 @@
             }
 
             $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-            $query = "SELECT public.prodotto.nome, public.tipologia.*, public.transazione.scadenza, public.transazione.quantità, public.transazione.momento, public.transazione.via, public.transazione.ritiro FROM public.tipologia, public.transazione INNER JOIN public.prodotto ON public.transazione.codprodotto=public.prodotto.codice WHERE codcliente=$1 AND public.tipologia.categoria=public.prodotto.codtipologia ORDER BY public.transazione.momento DESC;";
+            $query = 
+            "SELECT public.prodotto.nome, public.tipologia.*, public.transazione.scadenza, public.transazione.quantità, public.transazione.momento, public.transazione.via, public.transazione.ritiro FROM public.tipologia, public.transazione INNER JOIN public.prodotto ON public.transazione.codprodotto=public.prodotto.codice WHERE codcliente=$1 AND public.tipologia.categoria=public.prodotto.codtipologia ORDER BY public.transazione.momento DESC;";
             $result = pg_query_params($dbconn, $query, array($codice)); //Ci prendiamo la TABELLA risultante dalla query
             $array2 = array();
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) {
