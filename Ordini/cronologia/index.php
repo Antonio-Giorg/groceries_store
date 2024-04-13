@@ -1,33 +1,32 @@
 <?php
-session_start();
- 
-                           
-            $a=$_COOKIE['PHPSESSID'];
-               
-           $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");$queryRemember = 'SELECT *
-            from utente inner join identificativo on utente.codice = identificativo.codcliente
-            where identificativo.codice = $1';
-            $resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
-            $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
-            
-            if ($tuple) {
-            
-            
-            $_SESSION['cognome'] = $tuple["cognome"];
-            $_SESSION['email'] = $tuple["email"];
-            $_SESSION['password'] = $tuple["pswd"];
-            $_SESSION['cap'] = $tuple["cap"];
-            $_SESSION['cellulare'] = $tuple["cellulare"];
-            $_SESSION['cf'] = $tuple["cf"];
-            $_SESSION['città'] = $tuple["città"];
-            $_SESSION['via'] = $tuple["via"];
-            $_SESSION['regione'] = $tuple["regione"];
-            $_SESSION['codice'] = $tuple["codcliente"];
+    session_start();
 
-            $_SESSION['loggato'] = 1;
-            $_SESSION['nome'] = $tuple["nome"];
-            }
-#echo $_SESSION['codice'];
+
+    $a = $_COOKIE['PHPSESSID'];
+
+    $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+    $queryRemember = "SELECT * FROM utente INNER JOIN identificativo ON utente.codice = identificativo.codcliente WHERE identificativo.codice = 9;";
+    $resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
+    $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
+
+    if ($tuple) {
+
+
+        $_SESSION['cognome'] = $tuple["cognome"];
+        $_SESSION['email'] = $tuple["email"];
+        $_SESSION['password'] = $tuple["pswd"];
+        $_SESSION['cap'] = $tuple["cap"];
+        $_SESSION['cellulare'] = $tuple["cellulare"];
+        $_SESSION['cf'] = $tuple["cf"];
+        $_SESSION['città'] = $tuple["città"];
+        $_SESSION['via'] = $tuple["via"];
+        $_SESSION['regione'] = $tuple["regione"];
+        $_SESSION['codice'] = $tuple["codcliente"];
+
+        $_SESSION['loggato'] = 1;
+        $_SESSION['nome'] = $tuple["nome"];
+    }
+    #echo $_SESSION['codice'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,30 +40,28 @@ session_start();
     <title>Cronologia Ordini</title>
 </head>
 
-<body style="background: rgba(0, 128, 0, 0.3)" >
+<body style="background: rgba(0, 128, 0, 0.3)">
 
     <H1>CRONOLOGIA ORDINI</H1>
 
     <script>
         var dati =
             <?php
-           
+
             if (!isset($_SESSION["loggato"]) && !isset($_COOKIE["nome"])) {
                 header("location: ../../Home_Section/index.php");
                 return;
             }
 
-            if (isset($_SESSION["codice"])){
-                $codice=$_SESSION["codice"];
+            if (isset($_SESSION["codice"])) {
+                $codice = $_SESSION["codice"];
             }
-            if (isset($_COOKIE["codice"])){
-                $codice=$_COOKIE["codice"];
+            if (isset($_COOKIE["codice"])) {
+                $codice = $_COOKIE["codice"];
             }
-            
-           $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");$query = 'SELECT prodotto.nome, tipologia.*,transazione.scadenza,transazione.quantità, transazione.momento, transazione.via,transazione.ritiro
-                      from tipologia, transazione inner join prodotto on transazione.codprodotto=prodotto.codice
-                      where codcliente=$1 and tipologia.categoria=prodotto.codtipologia
-                      ORDER BY transazione.momento DESC';
+
+            $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+            $query = "SELECT prodotto.nome, tipologia.*, transazione.scadenza, transazione.quantità, transazione.momento, transazione.via, transazione.ritiro FROM tipologia, transazione INNER JOIN prodotto ON transazione.codprodotto=prodotto.codice WHERE codcliente=$1 AND tipologia.categoria=prodotto.codtipologia ORDER BY transazione.momento DESC;";
             $result = pg_query_params($dbconn, $query, array($codice)); //Ci prendiamo la TABELLA risultante dalla query
             $array2 = array();
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) {
@@ -82,10 +79,8 @@ session_start();
         <div class="row" id="riga">
             <div class="col-6" id="statistiche">
                 <?php
-               $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");    $query = 'SELECT sum(transazione.quantità), tipologia.categoria
-                          from tipologia, transazione inner join prodotto on transazione.codprodotto=prodotto.codice
-                          where codcliente=$1 and tipologia.categoria=prodotto.codtipologia
-                          group by tipologia.categoria';
+                $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+                $query = "SELECT SUM(transazione.quantità), tipologia.categoria FROM tipologia, transazione INNER JOIN prodotto ON transazione.codprodotto=prodotto.codice WHERE codcliente=$1 AND tipologia.categoria=prodotto.codtipologia GROUP BY tipologia.categoria;";
                 $result = pg_query_params($dbconn, $query, array($codice)); //Ci prendiamo la TABELLA risultante dalla query
                 $array2 = array();
                 while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella risultante della query prendendone i valori.
