@@ -5,7 +5,7 @@
     $a = $_COOKIE['PHPSESSID'];
 
     $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-    $queryRemember = "SELECT * FROM utente INNER JOIN identificativo ON utente.codice = identificativo.codcliente WHERE identificativo.codice = 9;";
+    $queryRemember = "SELECT * FROM public.utente INNER JOIN public.identificativo ON public.utente.codice = public.identificativo.codcliente WHERE public.identificativo.codice = 9;";
     $resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
     $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
@@ -61,7 +61,7 @@
             }
 
             $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-            $query = "SELECT prodotto.nome, tipologia.*, transazione.scadenza, transazione.quantità, transazione.momento, transazione.via, transazione.ritiro FROM tipologia, transazione INNER JOIN prodotto ON transazione.codprodotto=prodotto.codice WHERE codcliente=$1 AND tipologia.categoria=prodotto.codtipologia ORDER BY transazione.momento DESC;";
+            $query = "SELECT public.prodotto.nome, public.tipologia.*, public.transazione.scadenza, public.transazione.quantità, public.transazione.momento, public.transazione.via, public.transazione.ritiro FROM public.tipologia, public.transazione INNER JOIN public.prodotto ON public.transazione.codprodotto=public.prodotto.codice WHERE codcliente=$1 AND public.tipologia.categoria=public.prodotto.codtipologia ORDER BY public.transazione.momento DESC;";
             $result = pg_query_params($dbconn, $query, array($codice)); //Ci prendiamo la TABELLA risultante dalla query
             $array2 = array();
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) {
@@ -80,7 +80,7 @@
             <div class="col-6" id="statistiche">
                 <?php
                 $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-                $query = "SELECT SUM(transazione.quantità), tipologia.categoria FROM tipologia, transazione INNER JOIN prodotto ON transazione.codprodotto=prodotto.codice WHERE codcliente=$1 AND tipologia.categoria=prodotto.codtipologia GROUP BY tipologia.categoria;";
+                $query = "SELECT SUM(public.transazione.quantità), public.tipologia.categoria FROM public.tipologia, public.transazione INNER JOIN public.prodotto ON public.transazione.codprodotto=public.prodotto.codice WHERE codcliente=$1 AND public.tipologia.categoria=public.prodotto.codtipologia GROUP BY public.tipologia.categoria;";
                 $result = pg_query_params($dbconn, $query, array($codice)); //Ci prendiamo la TABELLA risultante dalla query
                 $array2 = array();
                 while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella risultante della query prendendone i valori.
