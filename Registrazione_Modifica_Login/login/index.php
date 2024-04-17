@@ -1,7 +1,11 @@
 <?php
 //page 1
 
+// Percorso al file di configurazione
+$configFilePath = '../../dir_queries\queries.ini';
 
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
 session_start();
 
 $tuple = "nulla";
@@ -9,7 +13,8 @@ $flag="nulla";
 
 #setcookie("abcdefgh", "ffffffffffffinale", time()+400,"/");
 
-$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+$db = getenv('PG_DATABASE');
+$dbconn = pg_connect($db);
 
 
     if (isset($_POST["submit"]) || isset($_POST["email"])) {
@@ -18,14 +23,9 @@ $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres passw
         $email = $_POST["email"];
         $password = $_POST["pswd"];
 
-<<<<<<< HEAD
-
-        $result = pg_query_params($db, $queryConfig['login_queries']['user_authentication'], array($email, hash('sha256',$password)));
-=======
         $query = 'SELECT * from public.utente where email=$1 AND pswd=$2';
         //echo $email,hash('sha256',$password);
-        $result = pg_query_params($dbconn, $query, array($email, hash('sha256',$password)));
->>>>>>> parent of 458389d (test alessio)
+        $result = pg_query_params($dbconn, $queryConfig['database_queries']['user_authentication'], array($email, hash('sha256',$password)));
         $tuple = "nulla";
         $flag="nulla";
         $tuple = pg_fetch_array($result, null, PGSQL_ASSOC);
@@ -87,7 +87,8 @@ $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres passw
                                                 $_SESSION['ricordami'] = 1;
 
                                             } else {
-                                                $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+                                                $db = getenv('PG_DATABASE');
+$dbconn = pg_connect($db);
                                                 
                                                 $id = session_id();
                                                 $codice = $_SESSION['codice'];
@@ -98,13 +99,8 @@ $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres passw
                                                
                                                 $querynoRem = 'INSERT INTO identificativo values ($1,$2)';
                                                 
-<<<<<<< HEAD
-                                               
-                                                $ris=pg_query_params($db, $queryConfig['login_queries']['user_authentication'], array($id,$codice));
-=======
                                                 ##$ris=pg_query_params($dbconn, $querynoRem, array($id,$codice));    
                                                 $ris=pg_query_params($dbconn, $querynoRem, array($id,$codice));
->>>>>>> parent of 458389d (test alessio)
 
 
 
@@ -132,15 +128,10 @@ $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres passw
         }
     }
 
-<<<<<<< HEAD
-   
-    $resultRemember = pg_query_params($db, $queryConfig['login_queries']['retrieve_user_session'], array(session_id()));
-=======
     $queryRemember = 'SELECT public.utente.email, public.utente.pswd
                 from public.utente inner join identificativo on public.utente.codice = identificativo.codcliente
                 where identificativo.codice = $1';
     $resultRemember = pg_query_params($dbconn, $queryRemember, array(session_id()));
->>>>>>> parent of 458389d (test alessio)
     $tupleRemember = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
     if ($tupleRemember) {
@@ -148,7 +139,7 @@ $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres passw
         $_POST["email"] = $tupleRemember["email"];
         $_POST["pswd"] = $tupleRemember["pswd"];
     }
-pg_close($db);
+pg_close($dbconn);
 ?>
 
 
@@ -183,6 +174,8 @@ pg_close($db);
       
         
         <input id="email" type="email" name="email" class="form-control  mt-1" value="<?php 
+
+
                                                                                         if (isset($_POST['submit'])) {
                                                                                             echo $_POST["email"];
                                                                                         } else {
@@ -194,7 +187,9 @@ pg_close($db);
                                                                                         ?>" required autofocus />
         <label id="labelEmail" placeholder="Email Inserita", alt=" Email " > </label>
         <div>
-            <input id="password" type="password" class="form-control" name="pswd" value="<?php  if (isset($_POST['submit'])) {
+            <input id="password" type="password" class="form-control" name="pswd" value="<?php 
+
+ if (isset($_POST['submit'])) {
                                                                                                 echo $_POST["pswd"];
                                                                                             } else {
                                                                                                 if ($tupleRemember) {
@@ -231,7 +226,13 @@ pg_close($db);
     // Rendo o nascondo il testo
     
         
-        flagJS = "<?php echo $flag; ?>";
+        flagJS = "<?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+echo $flag; ?>";
      
         if (flagJS == "nulla") {
             /*

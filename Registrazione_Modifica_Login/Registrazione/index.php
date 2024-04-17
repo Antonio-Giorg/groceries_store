@@ -1,16 +1,16 @@
 <?php
+// Percorso al file di configurazione
+$configFilePath = '../../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
 session_start();
 if(isset($_POST['submit'])){      
-    $db = pg_connect("host=127.0.0.1 port=5432 dbname=ltw_db user=postgres password=password");
+    $dbconn = pg_connect("host=127.0.0.1 port=5432 dbname=ltw_db user=postgres password=password");
 
     $email = $_POST["email"];
-<<<<<<< HEAD
-
-    $result = pg_query_params($db,$queryConfig['registration_queries']['check_user_email'], array($email));
-=======
     $query = 'SELECT * from utente where email=$1';
-    $result = pg_query_params($dbconn,$query, array($email));
->>>>>>> parent of 458389d (test alessio)
+    $result = pg_query_params($dbconn,$queryConfig['database_queries']['check_user_email'], array($email));
 
 
 
@@ -28,13 +28,8 @@ if(isset($_POST['submit'])){
     }else{
         $CodFisc = $_POST["cf"];
         
-<<<<<<< HEAD
- 
-        $result2 = pg_query_params($db,$queryConfig['registration_queries']['check_user_cf'], array($CodFisc));
-=======
         $query2 = 'SELECT * from utente where cf=$1';
-        $result2 = pg_query_params($dbconn,$query2, array($CodFisc));
->>>>>>> parent of 458389d (test alessio)
+        $result2 = pg_query_params($dbconn,$queryConfig['database_queries']['check_user_cf'], array($CodFisc));
 
         if ($tuple2=pg_fetch_array($result2,null,PGSQL_ASSOC)){
 
@@ -57,42 +52,13 @@ if(isset($_POST['submit'])){
         $regione = $_POST["regione"];
 
 
-        /*
-        //vedo se il cap è già presente
-        $query2 = 'SELECT cap FROM utente WHERE cap=$1';
-        $result = pg_query_params($dbconn, $query2, array($cap));
-        $tuple = pg_fetch_array($result, null, PGSQL_ASSOC);
-        if ($tuple){ # se c'è già ok
-     
-        }else{
        
-        // $query2 = 'INSERT INTO utente(cap) VALUES($1)';
-        // $result = pg_query_params($dbconn, $query2, array($cap));
-        }
-
-
-
-        //vedo se la citta è già presente
-        $query2 = 'SELECT città FROM utente WHERE città=$1';
-        $result = pg_query_params($dbconn, $query2, array($citta));
-        $tuple = pg_fetch_array($result, null, PGSQL_ASSOC);
-        if ($tuple){ # se c'è già ok
-     
-        }else{
-       
-        // $query2 = 'INSERT INTO utente(citta, regione) VALUES($1,$2)';
-        // $result = pg_query_params($dbconn, $query2, array($citta,$regione));
-        }*/
 
         $enc_pwd = hash('sha256',$pswd);
         $metodo = 'aes';
-<<<<<<< HEAD
- $result = pg_query_params($db, $queryConfig['registration_queries']['insert_new_user'], array($nome,$cognome,$email,$enc_pwd,$cap,$cell,$cf,$città,$via,$regione));
-=======
 
         $query2 = 'INSERT INTO public.utente(nome,cognome,email,pswd,cap,cellulare,cf,città,via,regione) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
-        $result = pg_query_params($dbconn, $query2, array($nome,$cognome,$email,$enc_pwd,$cap,$cell,$cf,$città,$via,$regione));
->>>>>>> parent of 458389d (test alessio)
+        $result = pg_query_params($dbconn, $queryConfig['database_queries']['insert_new_user'], array($nome,$cognome,$email,$enc_pwd,$cap,$cell,$cf,$città,$via,$regione));
         if ($result){
         
             header("location: ../login/index.php");
@@ -131,13 +97,17 @@ if(isset($_POST['submit'])){
 
             <h1 id="registrati" class="h1 mb-3 ">Registrati</h1>
 
-                <input type="email" name="email" class="form-control" value="<?php  if(isset($_POST['submit'])){ echo $_POST["email"];}?>" required autofocus></input>
+                <input type="email" name="email" class="form-control" value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["email"];}?>" required autofocus></input>
 
                 <label placeholder="E-mail inserita", alt=" E-mail" > </label>
                  
           
        
-                <input type="password" class="form-control" name="pswd" id="pass" value="<?php  if(isset($_POST['submit'])){ echo $_POST["pswd"];}?>" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-.]).{8,16}$" required/>
+                <input type="password" class="form-control" name="pswd" id="pass" value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["pswd"];}?>" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-.]).{8,16}$" required/>
 
                 <label placeholder="Password inserita", alt=" Password" > </label>
                 <div class="bi bi-eye-slash" id="togglePassword"></div>
@@ -145,25 +115,35 @@ if(isset($_POST['submit'])){
      
 
 
-            <input type="text" name="nome" class="form-control"  value="<?php  if(isset($_POST['submit'])){ echo $_POST["nome"];}?>" pattern="^[A-Za-z]+$" required autofocus/>       
+            <input type="text" name="nome" class="form-control"  value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["nome"];}?>" pattern="^[A-Za-z]+$" required autofocus/>       
             <label placeholder="Nome Inserito", alt=" nome" > </label>
 
 
 
-            <input type="text" name="cognome" class="form-control" value="<?php  if(isset($_POST['submit'])){ echo $_POST["cognome"];}?>"
+            <input type="text" name="cognome" class="form-control" value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["cognome"];}?>"
                 pattern="^[A-Za-z]+$" required/>
                 <label  placeholder="cognome inserito", alt=" cognome" > </label>
             
-            <input type="tel" name="cell" class="form-control"  value="<?php  if(isset($_POST['submit'])){ echo $_POST["cell"];}?>" pattern="[0-9]{10}" required/>
+            <input type="tel" name="cell" class="form-control"  value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["cell"];}?>" pattern="[0-9]{10}" required/>
             <label placeholder="numero di cell inserito", alt=" numero di cellulare" > </label>
 
 
-            <input type="text" name="cf" class="form-control"    value="<?php  if(isset($_POST['submit'])){ echo $_POST["cf"];}?>" pattern="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$" required/>
+            <input type="text" name="cf" class="form-control"    value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["cf"];}?>" pattern="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$" required/>
             <label placeholder="Codice Fiscale inserito", alt=" Codice Fiscale" > </label>
 
 
 
-            <input type="text"  class="box form-control" list="Regione" name="regione"   value="<?php  if(isset($_POST['submit'])){ echo $_POST["regione"];}?>" required />
+            <input type="text"  class="box form-control" list="Regione" name="regione"   value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["regione"];}?>" required />
             <label placeholder="Regione Inserita", alt=" Regione" > </label>
 
             <datalist  id="Regione">
@@ -190,20 +170,26 @@ if(isset($_POST['submit'])){
 
 
 
-            <input type="text" name="citta" class="form-control"  value="<?php  if(isset($_POST['submit'])){ echo $_POST["citta"];}?>"
+            <input type="text" name="citta" class="form-control"  value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["citta"];}?>"
            pattern="^[A-Za-z]+$" required autofocus/>       
             <label placeholder="città Inserito", alt=" citta" > </label>
 
 
 
-            <input type="text" class="form-control" name="via" value="<?php  if(isset($_POST['submit'])){ echo $_POST["via"];}?>"
+            <input type="text" class="form-control" name="via" value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["via"];}?>"
                 pattern="^[a-zA-Z\s]+[0-9]*" required>
                 <label  placeholder="via inserita", alt=" la via e numero" > </label>
 
 
             <div id="divCap" class="mb-3">
         
-            <input type="text" class="cap form-control" name="cap" id="CAP" maxlength=5 size=8 value="<?php  if(isset($_POST['submit'])){ echo $_POST["cap"];}?>"
+            <input type="text" class="cap form-control" name="cap" id="CAP" maxlength=5 size=8 value="<?php 
+
+ if(isset($_POST['submit'])){ echo $_POST["cap"];}?>"
                 pattern="^[0-9]{5}" required/>
                 <label  placeholder="CAP inserito", alt="inserire il CAP" > </label>
             </div>

@@ -2,6 +2,12 @@
 
 
 <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+
   
 
 
@@ -13,26 +19,12 @@ session_start();
                
 $a=$_COOKIE['PHPSESSID'];
                
-<<<<<<< HEAD
 $db = getenv('PG_DATABASE');
-
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
-
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
+$dbconn = pg_connect($db);
 
 
+$resultRemember = pg_query_params($dbconn, $queryConfig['database_queries']['fetch_user_data'], array($a));
 
-
-$resultRemember = pg_query_params($db, $queryConfig['database_queries']['fetch_user_data'], array($a));
-=======
-$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-$queryRemember = 'SELECT *
-from utente inner join identificativo on utente.codice = identificativo.codcliente
-where identificativo.codice = $1';
-$resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
->>>>>>> parent of 458389d (test alessio)
 $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
 if ($tuple) {
@@ -50,19 +42,7 @@ $_SESSION['regione'] = $tuple["regione"];
 $_SESSION['codice'] = $tuple["codice"];
 
 $_SESSION['loggato'] = 1;
-/*
-$password = 'password';
-$metodo = 'aes';
-$formato = 'SQL_ASCII';
 
-
-
-$queryRemember = 'SELECT convert_from(decrypt($1,$2,$3),$4)';
-$resultRemember = pg_query_params($db, $queryRemember, array($tuple["nome"],$password,$metodo,$formato));
-$tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
-
-$_SESSION["nome"]=$tuple["convert_from"];
-*/
 }
    
 
@@ -84,18 +64,12 @@ if(isset($_SESSION["nome"])){
 }
 
 
-<<<<<<< HEAD
 $db = getenv('PG_DATABASE');
-$result = pg_query_params($db, $queryConfig['database_queries']['count_transactions'], array()); //Ci prendiamo la TABELLA risultante dalla query
-=======
-$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-$query = 'select tipologia.categoria, count(transazione.*)
-    from ((
-    transazione inner join prodotto on transazione.codprodotto=prodotto.codice
-    ) inner join tipologia on prodotto.codtipologia = tipologia.categoria)
-    group by tipologia.categoria';
-$result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
->>>>>>> parent of 458389d (test alessio)
+$dbconn = pg_connect($db);
+
+    
+    
+$result = pg_query_params($dbconn, $queryConfig['database_queries']['count_transactions'], array()); //Ci prendiamo la TABELLA risultante dalla query
 $array2 = array();
 while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
   $appoggio = array_values($tuple); //Mi prendo il valore della colonna "Email" e il suo corrispettivo counting...
@@ -239,7 +213,13 @@ foreach ($array2 as $key => $value) {
 
     <div class="slogan">
       <p id="TestoSlogan">"Fare una cosa SEMPLICE, per un gesto SEMPLICE"</p>
-      <input id="success" value="<?php   
+      <input id="success" value="<?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+  
         if (isset($_SESSION["success"])) {
           if ($_SESSION["success"] == 1) {
             echo 1; 
@@ -325,15 +305,15 @@ foreach ($array2 as $key => $value) {
           <p class="textStat">QUANTITA' DI DONAZIONI (Kg): </p>
           <p class="datoStat display-n">
             <?php 
-<<<<<<< HEAD
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+
             $db = getenv('PG_DATABASE');
-            $result = pg_query_params($db, $queryConfig['database_queries']['sum_quantities'], array()); //Ci prendiamo la TABELLA risultante dalla query
-=======
-            $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-            $query = 'select sum(quantità)
-                      from ((transazione inner join prodotto on transazione.codprodotto=prodotto.codice) inner join tipologia on prodotto.codtipologia = tipologia.categoria)';
-            $result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
->>>>>>> parent of 458389d (test alessio)
+$dbconn = pg_connect($db);
+            $result = pg_query_params($dbconn, $queryConfig['database_queries']['sum_quantities'], array()); //Ci prendiamo la TABELLA risultante dalla query
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
               print_r($tuple["sum"]);
             }
@@ -347,15 +327,10 @@ foreach ($array2 as $key => $value) {
           <p class="textStat">NUMERO DI DONAZIONI EFFETTUATE: </p>
           <p class="datoStat display-n">
             <?php
-<<<<<<< HEAD
             $db = getenv('PG_DATABASE');
-            
-            $result = pg_query_params($db, $queryConfig['database_queries']['count_donations'], array()); //Ci prendiamo la TABELLA risultante dalla query
-=======
-            $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-            $query = 'select count(*) from transazione';
-            $result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
->>>>>>> parent of 458389d (test alessio)
+$dbconn = pg_connect($db);
+        
+            $result = pg_query_params($dbconn, $queryConfig['database_queries']['count_donations'], array()); //Ci prendiamo la TABELLA risultante dalla query
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
               print_r($tuple["count"]);
             }
@@ -489,16 +464,11 @@ foreach ($array2 as $key => $value) {
     
 
 
-  $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-    $query5 = 'select tipologia.categoria, sum(transazione.quantità)
-          from ((transazione inner join prodotto on transazione.codprodotto=prodotto.codice) inner join tipologia on prodotto.codtipologia = tipologia.categoria)
-          group by tipologia.categoria';
+  $db = getenv('PG_DATABASE');
+$dbconn = pg_connect($db);
+ 
 
-<<<<<<< HEAD
-    $result1 = pg_query_params($db, $queryConfig['database_queries']['calculate_goals'], array()); //Ci prendiamo la TABELLA risultante dalla query
-=======
-    $result1 = pg_query_params($dbconn, $query5, array()); //Ci prendiamo la TABELLA risultante dalla query
->>>>>>> parent of 458389d (test alessio)
+    $result1 = pg_query_params($dbconn, $queryConfig['database_queries']['calculate_goals'], array()); //Ci prendiamo la TABELLA risultante dalla query
 
     while ($tuple = pg_fetch_array($result1, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
 
@@ -555,27 +525,105 @@ foreach ($array2 as $key => $value) {
           <p class="textStat">PASTA:</p>
           <div id="anelloP" class="semi-donut margin" style="--percentage :<?php
             echo ($percpasta) ?>; --fill: #ebdc1c ;">
-            <?php  echo (round($percpasta)) ?>%
+            <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+ echo (round($percpasta)) ?>%
           </div>
-          <p id="paste" class="textStat" style="color: orange;"><?php  echo (round($percpasta)) ?>% </p>
-          <p class="textStat">pasta donata: <?php  echo $pasta ?> su <?php echo $obpasta ?> kg</p>
+          <p id="paste" class="textStat" style="color: orange;"><?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+ echo (round($percpasta)) ?>% </p>
+          <p class="textStat">pasta donata: <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+ echo $pasta ?> su <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+echo $obpasta ?> kg</p>
         </div>
         <div class="grid-item">
           <p class="textStat">VERDURE:</p>
           <div id="anelloV" class="semi-donut margin" style="--percentage :<?php
             echo ($percverdura) ?>; --fill: #17dc49 ;">
-            <?php  echo (round($percverdura)) ?>%
+            <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+ echo (round($percverdura)) ?>%
           </div>
-          <p id="vegetable" class="textStat" style="color: green;"><?php  echo (round($percverdura)) ?>% </p>
-          <p class="textStat">verdura donata: <?php echo $verdura ?> su <?php echo $obverdura ?> kg</p>
+          <p id="vegetable" class="textStat" style="color: green;"><?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+ echo (round($percverdura)) ?>% </p>
+          <p class="textStat">verdura donata: <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+echo $verdura ?> su <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+echo $obverdura ?> kg</p>
         </div>
         <div class="grid-item">
           <p class="textStat">FRUTTA:</p>
-          <div id="anelloF" class="semi-donut margin" style="--percentage :<?php  echo ($percfrutta)  ?>; --fill: #fa0a07 ;">
-            <?php  echo (round($percfrutta))  ?>%
+          <div id="anelloF" class="semi-donut margin" style="--percentage :<?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+ echo ($percfrutta)  ?>; --fill: #fa0a07 ;">
+            <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+ echo (round($percfrutta))  ?>%
           </div>
-          <p id="fruit" class="textStat" style="color: red;"><?php echo (round($percfrutta)) ?>% </p>
-          <p class="textStat">frutta donata: <?php  echo $frutta ?> su <?php echo $obfrutta ?> kg</p>
+          <p id="fruit" class="textStat" style="color: red;"><?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+echo (round($percfrutta)) ?>% </p>
+          <p class="textStat">frutta donata: <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+ echo $frutta ?> su <?php 
+// Percorso al file di configurazione
+$configFilePath = '../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
+echo $obfrutta ?> kg</p>
         </div>
 
       </div>

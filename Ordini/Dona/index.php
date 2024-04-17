@@ -1,13 +1,14 @@
 <!-- carciamento dati per il riempimento dei grafici -->
 <?php
-   $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-   $query5 = 'select tipologia.categoria, sum(transazione.quantità)
-    from ((
-    transazione inner join prodotto on transazione.codprodotto=prodotto.codice
-    ) inner join tipologia on prodotto.codtipologia = tipologia.categoria)
-    group by tipologia.categoria';
+   $db = getenv('PG_DATABASE');
+$dbconn = pg_connect($db);
+// Percorso al file di configurazione
+$configFilePath = '../../dir_queries\queries.ini';
+
+// Caricamento delle configurazioni
+$queryConfig = parse_ini_file($configFilePath, true);
     $array2 = array();
-    $result1 = pg_query_params($db, $query5, array()); //Ci prendiamo la TABELLA risultante dalla query
+    $result1 = pg_query_params($dbconn, $queryConfig['database_queries']['calculate_goals'], array()); //Ci prendiamo la TABELLA risultante dalla query
 
     while ($tuple = pg_fetch_array($result1, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
 
@@ -87,11 +88,10 @@
                  
   $a=$_COOKIE['PHPSESSID'];
                
-  $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
- $queryRemember = 'SELECT *
-  from utente inner join identificativo on utente.codice = identificativo.codcliente
-  where identificativo.codice = $1';
-  $resultRemember = pg_query_params($db, $queryRemember, array($a));
+  $db = getenv('PG_DATABASE');
+$dbconn = pg_connect($db);
+
+  $resultRemember = pg_query_params($dbconn, $queryConfig['database_queries']['fetch_user_data'], array($a));
   $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
   
   if ($tuple) {
