@@ -156,16 +156,7 @@ $configFilePath = '../dir_queries/queries.ini';
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
 echo $email;  ?>" required />
-        <div>
-            <input type="password" class="form-control margine" name="pswd" id="pass" value="<?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
-
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
-echo $password  ?>" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-.]).{8,16}$" required />
-            <i class="bi bi-eye-slash" id="togglePassword"></i>
-        </div>
+        
 
         <p class="Explain">Regione:</p>
         <input class="box margine" id="boxRegione" list="Regione" name="regione" value="<?php 

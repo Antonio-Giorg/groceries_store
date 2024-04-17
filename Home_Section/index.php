@@ -177,7 +177,7 @@ foreach ($array2 as $key => $value) {
                       <a class='nav-link dropdown-toggle' data-bs-toggle='dropdown' href='#' role='a' aria-expanded='false'>Impostazioni</a>
                       <ul class='dropdown-menu'>
                       <li><a class='dropdown-item' href='../Ordini/cronologia/index.php'>Cronologia ordini</a></li>
-                      <li><a class='dropdown-item' href='../Registrazione_Modifica_Login/modifica/index.php'>Modifica</a></li>
+                      
                       <li><hr class='dropdown-divider'></li>
                       <li><a id='esci' class='dropdown-item' href='../Registrazione_Modifica_Login/logout.php'>Disconnettiti</a></li>
                     </ul>
