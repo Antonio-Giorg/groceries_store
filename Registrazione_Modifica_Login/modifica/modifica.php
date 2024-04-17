@@ -28,7 +28,7 @@ if (isset($_COOKIE["codice"])){
         $codice=$_COOKIE["codice"];
 }
 
-$db = getenv('PG_DATABASE');   
+$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");   
 
 
 $query2= 'UPDATE utente SET nome=$1,cognome=$2,email=$3,pswd=$4,cap=$5,cellulare=$6,cf=$7,città=$8,via=$9,regione=$10  WHERE codice=$11';

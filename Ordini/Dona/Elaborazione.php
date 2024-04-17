@@ -1,6 +1,7 @@
 <?php
 session_start();
 $a=$_COOKIE['PHPSESSID'];
+<<<<<<< HEAD
                    // Percorso al file di configurazione
 $configFilePath = '../../dir_queries\queries.ini';
 
@@ -9,6 +10,14 @@ $queryConfig = parse_ini_file($configFilePath, true);
 
   $db = getenv('PG_DATABASE');
   $resultRemember = pg_query_params($db, $queryConfig['database_queries']['fetch_user_data'], array($a));
+=======
+               
+  $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+  $queryRemember = 'SELECT *
+  from utente inner join identificativo on utente.codice = identificativo.codcliente
+  where identificativo.codice = $1';
+  $resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
+>>>>>>> parent of 458389d (test alessio)
   $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
   
   if ($tuple) {
@@ -40,12 +49,18 @@ if (isset($_SESSION["codice"])){
 if (isset($_COOKIE["codice"])){
     $loggato = $_COOKIE["codice"];
 }
-$db = getenv('PG_DATABASE');
+$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
 
 
 //Ci prendiamo i dati dei prodotti inseriti nel carrello dall'utente mediante una chiamata AJAX col GET dal JS, e mettiamo i dati dentro un array.
 $arr = explode(",", $_GET['dati']); 
+<<<<<<< HEAD
 $result = pg_query_params($db, $queryConfig['database_queries']['product_code_by_name'], array($arr[0]));
+=======
+
+$query = 'SELECT codice FROM public.prodotto WHERE nome=($1)';
+$result = pg_query_params($dbconn, $query, array($arr[0]));
+>>>>>>> parent of 458389d (test alessio)
 
 
 
@@ -57,8 +72,13 @@ for ($i = 0; $i < count($arr) - 2; $i++) {
 
     /*Facciamo (prima dell'inserimento della transazione), un ulteriore query, verifichiamo se ci sono dei prodotti NUOVI (non presenti nel DB a livello di Nome/Tipologia), inseriti
     dall'utente.*/
+<<<<<<< HEAD
 
     $result = pg_query_params($db, $queryConfig['database_queries']['check_product_exists'], array($arr2[0]));
+=======
+    $query = 'SELECT * FROM public.prodotto WHERE UPPER(nome) LIKE UPPER ($1)';
+    $result = pg_query_params($dbconn, $query, array($arr2[0]));
+>>>>>>> parent of 458389d (test alessio)
 
     //Se il prodotto è già presente nel DB semplicemente ne prendo il codice/ID/PK di riferimento.
     if ($codiceProdottoArr = pg_fetch_array($result, null, PGSQL_ASSOC)) {
@@ -69,6 +89,7 @@ for ($i = 0; $i < count($arr) - 2; $i++) {
     } else { //Altrimenti lo inserisco appositamente con tutti i JOIN e le FK del caso.
         $NomeProdNuovo = $arr2[0];
         $TipProdNuovo = $arr2[1];
+<<<<<<< HEAD
 
         $result2 = pg_query_params($db,$queryConfig['database_queries']['insert_new_product'], array($NomeProdNuovo, $TipProdNuovo));
         if (!$result2) {
@@ -76,6 +97,15 @@ for ($i = 0; $i < count($arr) - 2; $i++) {
         }
 
         $result2 = pg_query_params($db, $queryConfig['database_queries']['product_code_by_name'], array($NomeProdNuovo));
+=======
+        $query = 'INSERT INTO public.prodotto(nome, codtipologia) VALUES ($1, $2)';
+        $result2 = pg_query_params($dbconn, $query, array($NomeProdNuovo, $TipProdNuovo));
+        if (!$result2) {
+            die("c'è stato un errore");
+        }
+        $query = 'SELECT codice FROM public.prodotto WHERE nome=($1)';
+        $result2 = pg_query_params($dbconn, $query, array($NomeProdNuovo));
+>>>>>>> parent of 458389d (test alessio)
         if ($codiceProdottoArr = pg_fetch_array($result2, null, PGSQL_ASSOC)) {
             foreach ($codiceProdottoArr as $key => $value) {
                 $codiceProdotto = $value;
@@ -90,7 +120,12 @@ for ($i = 0; $i < count($arr) - 2; $i++) {
     $tag=$arr2[count($arr2) - 1];
 
     //Inserisco nel DB i dati inerenti alla transazione del prodotto (cosa iterata per ogni prodotto del carrello):
+<<<<<<< HEAD
    $Inserimento = pg_query_params($db, $queryConfig['database_queries']['insert_transaction'], array(date("Y-m-d"), $loggato, $codiceProdotto, $quantita, $ScadProd, $indirizzo, $dataCon, $tag));
+=======
+    $query = 'INSERT INTO public.transazione(momento, codcliente, codprodotto,quantità,scadenza,via, ritiro, tags) VALUES ($1, $2, $3,$4,$5,$6,$7, $8)';
+    $Inserimento = pg_query_params($dbconn, $query, array(date("Y-m-d"), $loggato, $codiceProdotto, $quantita, $ScadProd, $indirizzo, $dataCon, $tag));
+>>>>>>> parent of 458389d (test alessio)
 }
 if ($result) {
     $_SESSION["success"]=1;

@@ -13,6 +13,7 @@ session_start();
                
 $a=$_COOKIE['PHPSESSID'];
                
+<<<<<<< HEAD
 $db = getenv('PG_DATABASE');
 
 // Percorso al file di configurazione
@@ -25,10 +26,14 @@ $queryConfig = parse_ini_file($configFilePath, true);
 
 
 $resultRemember = pg_query_params($db, $queryConfig['database_queries']['fetch_user_data'], array($a));
+=======
+$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+$queryRemember = 'SELECT *
+from utente inner join identificativo on utente.codice = identificativo.codcliente
+where identificativo.codice = $1';
+$resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
+>>>>>>> parent of 458389d (test alessio)
 $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
-
-
-
 
 if ($tuple) {
 
@@ -79,8 +84,18 @@ if(isset($_SESSION["nome"])){
 }
 
 
+<<<<<<< HEAD
 $db = getenv('PG_DATABASE');
 $result = pg_query_params($db, $queryConfig['database_queries']['count_transactions'], array()); //Ci prendiamo la TABELLA risultante dalla query
+=======
+$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+$query = 'select tipologia.categoria, count(transazione.*)
+    from ((
+    transazione inner join prodotto on transazione.codprodotto=prodotto.codice
+    ) inner join tipologia on prodotto.codtipologia = tipologia.categoria)
+    group by tipologia.categoria';
+$result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
+>>>>>>> parent of 458389d (test alessio)
 $array2 = array();
 while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
   $appoggio = array_values($tuple); //Mi prendo il valore della colonna "Email" e il suo corrispettivo counting...
@@ -235,7 +250,7 @@ foreach ($array2 as $key => $value) {
     </div>
 
     <a href="../Ordini/Dona/index.php">
-      <bottone type="button" onclick="/Ordini/Dona/index.php" class="dona"> DONA </bottone>
+      <bottone type="button" onclick="../Ordini/Dona/index.php" class="dona"> DONA </bottone>
     </a>
   </div>
 
@@ -310,8 +325,15 @@ foreach ($array2 as $key => $value) {
           <p class="textStat">QUANTITA' DI DONAZIONI (Kg): </p>
           <p class="datoStat display-n">
             <?php 
+<<<<<<< HEAD
             $db = getenv('PG_DATABASE');
             $result = pg_query_params($db, $queryConfig['database_queries']['sum_quantities'], array()); //Ci prendiamo la TABELLA risultante dalla query
+=======
+            $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+            $query = 'select sum(quantità)
+                      from ((transazione inner join prodotto on transazione.codprodotto=prodotto.codice) inner join tipologia on prodotto.codtipologia = tipologia.categoria)';
+            $result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
+>>>>>>> parent of 458389d (test alessio)
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
               print_r($tuple["sum"]);
             }
@@ -325,9 +347,15 @@ foreach ($array2 as $key => $value) {
           <p class="textStat">NUMERO DI DONAZIONI EFFETTUATE: </p>
           <p class="datoStat display-n">
             <?php
+<<<<<<< HEAD
             $db = getenv('PG_DATABASE');
             
             $result = pg_query_params($db, $queryConfig['database_queries']['count_donations'], array()); //Ci prendiamo la TABELLA risultante dalla query
+=======
+            $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+            $query = 'select count(*) from transazione';
+            $result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
+>>>>>>> parent of 458389d (test alessio)
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
               print_r($tuple["count"]);
             }
@@ -461,10 +489,16 @@ foreach ($array2 as $key => $value) {
     
 
 
-  $db = getenv('PG_DATABASE');
-   
+  $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+    $query5 = 'select tipologia.categoria, sum(transazione.quantità)
+          from ((transazione inner join prodotto on transazione.codprodotto=prodotto.codice) inner join tipologia on prodotto.codtipologia = tipologia.categoria)
+          group by tipologia.categoria';
 
+<<<<<<< HEAD
     $result1 = pg_query_params($db, $queryConfig['database_queries']['calculate_goals'], array()); //Ci prendiamo la TABELLA risultante dalla query
+=======
+    $result1 = pg_query_params($dbconn, $query5, array()); //Ci prendiamo la TABELLA risultante dalla query
+>>>>>>> parent of 458389d (test alessio)
 
     while ($tuple = pg_fetch_array($result1, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
 
