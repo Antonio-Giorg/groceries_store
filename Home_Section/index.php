@@ -1,24 +1,21 @@
-
-
-
-<?php 
+<?php
 // Percorso al file di configurazione
 $configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
 
-  
 
 
-        
+
+
 #carichiamo nella session se id presente in identificativo 
-        
+
 
 session_start();
-               
-$a=$_COOKIE['PHPSESSID'];
-               
+
+$a = $_COOKIE['PHPSESSID'];
+
 $db = getenv('PG_DATABASE');
 $dbconn = pg_connect($db);
 
@@ -30,21 +27,20 @@ $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 if ($tuple) {
 
   $_SESSION['nome'] = $tuple["nome"];
-$_SESSION['cognome'] = $tuple["cognome"];
-$_SESSION['email'] = $tuple["email"];
-$_SESSION['password'] = $tuple["pswd"];
-$_SESSION['cap'] = $tuple["cap"];
-$_SESSION['cellulare'] = $tuple["cellulare"];
-$_SESSION['cf'] = $tuple["cf"];
-$_SESSION['città'] = $tuple["città"];
-$_SESSION['via'] = $tuple["via"];
-$_SESSION['regione'] = $tuple["regione"];
-$_SESSION['codice'] = $tuple["codice"];
+  $_SESSION['cognome'] = $tuple["cognome"];
+  $_SESSION['email'] = $tuple["email"];
+  $_SESSION['password'] = $tuple["pswd"];
+  $_SESSION['cap'] = $tuple["cap"];
+  $_SESSION['cellulare'] = $tuple["cellulare"];
+  $_SESSION['cf'] = $tuple["cf"];
+  $_SESSION['città'] = $tuple["città"];
+  $_SESSION['via'] = $tuple["via"];
+  $_SESSION['regione'] = $tuple["regione"];
+  $_SESSION['codice'] = $tuple["codice"];
 
-$_SESSION['loggato'] = 1;
-
+  $_SESSION['loggato'] = 1;
 }
-   
+
 
 
 ?>
@@ -56,19 +52,19 @@ $_SESSION['loggato'] = 1;
 
 //PHP relativo al caricamento dei dati dei Donat/Goal/Transazioni fatte ta tutti gli utenti.
 
-if(isset($_COOKIE["nome"])){
-  $nome=$_COOKIE["nome"];
+if (isset($_COOKIE["nome"])) {
+  $nome = $_COOKIE["nome"];
 }
-if(isset($_SESSION["nome"])){
-  $nome=$_SESSION["nome"];
+if (isset($_SESSION["nome"])) {
+  $nome = $_SESSION["nome"];
 }
 
 
 $db = getenv('PG_DATABASE');
 $dbconn = pg_connect($db);
 
-    
-    
+
+
 $result = pg_query_params($dbconn, $queryConfig['database_queries']['count_transactions'], array()); //Ci prendiamo la TABELLA risultante dalla query
 $array2 = array();
 while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
@@ -89,38 +85,38 @@ foreach ($array2 as $key => $value) {
 <!DOCTYPE html>
 <html lang="it">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
 
 
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
-    <!-- link divisi per sezione-->
-    <link rel="stylesheet" href="./css/header.css">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/footer.css">
-    <!-- link alle icone dei social-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- link icona della finestra-->
-    <link rel="icon" href=".\media\immagini\icon.png">
-    
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+  <!-- link divisi per sezione-->
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/footer.css">
+  <!-- link alle icone dei social-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- link icona della finestra-->
+  <link rel="icon" href=".\media\immagini\icon.png">
 
 
-
-    
-    <meta name="author" content="Alessio Civica">
-    <meta name="keywords" content="Donazione, Alimenti, Cibo">
-    <meta name="description" content="Sito per la donazione alimentare">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="../bootstrap/js/bootstrap.min.js"></script>
 
 
-  </head> 
 
-  <body>
+
+  <meta name="author" content="Alessio Civica">
+  <meta name="keywords" content="Donazione, Alimenti, Cibo">
+  <meta name="description" content="Sito per la donazione alimentare">
+
+
+</head>
+
+<body>
 
 
 
@@ -135,8 +131,8 @@ foreach ($array2 as $key => $value) {
                 <img src="./media/immagini/logo-home.png" alt="Logo" id="logo" />
               </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <div class='main-btn'>Sezioni</div>
-               </button>
+                <div class='main-btn'>Sezioni</div>
+              </button>
 
               <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                 <div class="ms-auto">
@@ -161,19 +157,19 @@ foreach ($array2 as $key => $value) {
 
               <div id="utente">
                 <?php
- 
 
-              
+
+
                 if (!isset($_SESSION["loggato"]) && !isset($_COOKIE["email"])) {
-               
-                  
+
+
                   echo "<div class='header-btn'>
                 <a href='..\Registrazione_Modifica_Login\login\index.php' class='main-btn btn-hover'>Accedi</a>
                 </div>";
                 } else {
-                 
-                  if (isset($_SESSION["loggato"]) || isset($_SESSION["nome"]) || isset($_COOKIE["nome"]) ) {
-                   
+
+                  if (isset($_SESSION["loggato"]) || isset($_SESSION["nome"]) || isset($_COOKIE["nome"])) {
+
                     echo "<div id='testo'>Ciao,";
                     print_r($nome);
                     echo "</div> ";
@@ -202,31 +198,30 @@ foreach ($array2 as $key => $value) {
     </div>
 
     <!--navbar area -->
-    
+
 
   </header>
 
   <div id="DiVideo">
     <video id="video" loop autoplay muted>
-      <source src="./media/video/video.mp4" type="video/mp4" >
+      <source src="./media/video/video.mp4" type="video/mp4">
     </video>
 
     <div class="slogan">
       <p id="TestoSlogan">"Fare una cosa SEMPLICE, per un gesto SEMPLICE"</p>
-      <input id="success" value="<?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+      <input id="success" value="<?php
+                                  // Percorso al file di configurazione
+                                  $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
-  
-        if (isset($_SESSION["success"])) {
-          if ($_SESSION["success"] == 1) {
-            echo 1; 
-            $_SESSION["success"]=[];
-          }
-        }   ?>"
-      />
+                                  // Caricamento delle configurazioni
+                                  $queryConfig = parse_ini_file($configFilePath, true);
+
+                                  if (isset($_SESSION["success"])) {
+                                    if ($_SESSION["success"] == 1) {
+                                      echo 1;
+                                      $_SESSION["success"] = [];
+                                    }
+                                  }   ?>" />
     </div>
 
     <a href="../Ordini/Dona/index.php">
@@ -260,7 +255,7 @@ $queryConfig = parse_ini_file($configFilePath, true);
           <div class="carousel-item">
             <img src="./media/immagini/chi_siamo.png" class="d-block w-100" alt="Slide 2">
             <div class="carousel-caption d-none d-md-block">
-            <div class="mess" style="color:rgb(255, 0, 119);">Chi siamo?</div>
+              <div class="mess" style="color:rgb(255, 0, 119);">Chi siamo?</div>
               <p name="testoCarousel">Siamo un'associazione dedita alla raccolta fondi per i più bisognosi, che specialmente durante i tempi odierni tra guerre e pandemie stanno patendo momenti duri e difficili!</p>
             </div>
             <div class="Titolo_Carousel" style="color:purple">Con un pasto...</div>
@@ -268,7 +263,7 @@ $queryConfig = parse_ini_file($configFilePath, true);
           <div class="carousel-item">
             <img src="./media/immagini/donare.png" class="d-block w-100" alt="Slide 3">
             <div class="carousel-caption d-none d-md-block">
-            <div class="mess" style="color: rgb(0, 238, 255);;">Come donare?</div>
+              <div class="mess" style="color: rgb(0, 238, 255);;">Come donare?</div>
               <p name="testoCarousel">E' molto facile!
                 Ti basterà registrarti e scegliere la tipologia di prodotto da inserire e potrai successivamente scegliere se portare il tuo
                 prodotto presso uno dei nostri Locker affilitati o se farti passare un corriere a casa per il ritiro che porterà a noi la tua donazione!
@@ -291,7 +286,7 @@ $queryConfig = parse_ini_file($configFilePath, true);
 
 
 
-  
+
 
 
 
@@ -304,20 +299,20 @@ $queryConfig = parse_ini_file($configFilePath, true);
         <div class="grid-item">
           <p class="textStat">QUANTITA' DI DONAZIONI (Kg): </p>
           <p class="datoStat display-n">
-            <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+            <?php
+            // Percorso al file di configurazione
+            $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
+            // Caricamento delle configurazioni
+            $queryConfig = parse_ini_file($configFilePath, true);
 
             $db = getenv('PG_DATABASE');
-$dbconn = pg_connect($db);
+            $dbconn = pg_connect($db);
             $result = pg_query_params($dbconn, $queryConfig['database_queries']['sum_quantities'], array()); //Ci prendiamo la TABELLA risultante dalla query
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
               print_r($tuple["sum"]);
             }
-           
+
             ?>
           </p>
 
@@ -328,13 +323,13 @@ $dbconn = pg_connect($db);
           <p class="datoStat display-n">
             <?php
             $db = getenv('PG_DATABASE');
-$dbconn = pg_connect($db);
-        
+            $dbconn = pg_connect($db);
+
             $result = pg_query_params($dbconn, $queryConfig['database_queries']['count_donations'], array()); //Ci prendiamo la TABELLA risultante dalla query
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
               print_r($tuple["count"]);
             }
-            
+
             ?>
           </p>
         </div>
@@ -347,7 +342,7 @@ $dbconn = pg_connect($db);
       </div>
     </div>
   </div>
-  
+
   <!--Programma-News-Collaborazioni:-->
   <div id="carte">
     <!--Sezioni "disegnate su una griglia"-->
@@ -356,7 +351,7 @@ $dbconn = pg_connect($db);
         <div class="div1"> </div>
         <div class="div2"> <img src="./media/immagini/mensa-poveri.jpg" id="imgContorno"></div>
         <div class="div3"> </div>
-        <div class="div4 tit" >IL NOSTRO PROGRAMMA:</div>
+        <div class="div4 tit">IL NOSTRO PROGRAMMA:</div>
         <div class="div5">
           <p id="ProgNor" class="descrizione">
           </p>
@@ -369,7 +364,7 @@ $dbconn = pg_connect($db);
         <div class="div1C"> </div>
         <div class="div2"> <img src="./media/immagini/partnership.png" id="imgContorno"></div>
         <div class="div3"> </div>
-        <div class="div4 tit" >LE NOSTRE COLLABORAZIONI:</div>
+        <div class="div4 tit">LE NOSTRE COLLABORAZIONI:</div>
         <div class="div5">
           <p id="colNor" class="descrizione">
           </p>
@@ -379,10 +374,10 @@ $dbconn = pg_connect($db);
 
       <div class="parent" id="normaleN">
         <div class="div1N"> </div>
-        <div class="div2"> <img src="https://www.pirazzi.it/wp-content/uploads/2020/05/news.jpg"  id="imgContorno"></div>
+        <div class="div2"> <img src="https://www.pirazzi.it/wp-content/uploads/2020/05/news.jpg" id="imgContorno"></div>
         <div class="div3"> </div>
-        <div class="div4 tit" > NEWS:</div>
-        <div class="div5" >
+        <div class="div4 tit"> NEWS:</div>
+        <div class="div5">
           <p id="NewsNor" class="descrizione">
           </p>
         </div>
@@ -460,13 +455,13 @@ $dbconn = pg_connect($db);
     <h1 class="display-1">I nostri obiettivi:</h1>
 
     <?php
-  
-    
 
 
-  $db = getenv('PG_DATABASE');
-$dbconn = pg_connect($db);
- 
+
+
+    $db = getenv('PG_DATABASE');
+    $dbconn = pg_connect($db);
+
 
     $result1 = pg_query_params($dbconn, $queryConfig['database_queries']['calculate_goals'], array()); //Ci prendiamo la TABELLA risultante dalla query
 
@@ -524,106 +519,106 @@ $dbconn = pg_connect($db);
         <div class="grid-item">
           <p class="textStat">PASTA:</p>
           <div id="anelloP" class="semi-donut margin" style="--percentage :<?php
-            echo ($percpasta) ?>; --fill: #ebdc1c ;">
-            <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+                                                                            echo ($percpasta) ?>; --fill: #ebdc1c ;">
+            <?php
+            // Percorso al file di configurazione
+            $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
- echo (round($percpasta)) ?>%
+            // Caricamento delle configurazioni
+            $queryConfig = parse_ini_file($configFilePath, true);
+            echo (round($percpasta)) ?>%
           </div>
-          <p id="paste" class="textStat" style="color: orange;"><?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+          <p id="paste" class="textStat" style="color: orange;"><?php
+                                                                // Percorso al file di configurazione
+                                                                $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
- echo (round($percpasta)) ?>% </p>
-          <p class="textStat">pasta donata: <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+                                                                // Caricamento delle configurazioni
+                                                                $queryConfig = parse_ini_file($configFilePath, true);
+                                                                echo (round($percpasta)) ?>% </p>
+          <p class="textStat">pasta donata: <?php
+                                            // Percorso al file di configurazione
+                                            $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
- echo $pasta ?> su <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+                                            // Caricamento delle configurazioni
+                                            $queryConfig = parse_ini_file($configFilePath, true);
+                                            echo $pasta ?> su <?php
+                                                              // Percorso al file di configurazione
+                                                              $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
-echo $obpasta ?> kg</p>
+                                                              // Caricamento delle configurazioni
+                                                              $queryConfig = parse_ini_file($configFilePath, true);
+                                                              echo $obpasta ?> kg</p>
         </div>
         <div class="grid-item">
           <p class="textStat">VERDURE:</p>
           <div id="anelloV" class="semi-donut margin" style="--percentage :<?php
-            echo ($percverdura) ?>; --fill: #17dc49 ;">
-            <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+                                                                            echo ($percverdura) ?>; --fill: #17dc49 ;">
+            <?php
+            // Percorso al file di configurazione
+            $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
- echo (round($percverdura)) ?>%
+            // Caricamento delle configurazioni
+            $queryConfig = parse_ini_file($configFilePath, true);
+            echo (round($percverdura)) ?>%
           </div>
-          <p id="vegetable" class="textStat" style="color: green;"><?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+          <p id="vegetable" class="textStat" style="color: green;"><?php
+                                                                    // Percorso al file di configurazione
+                                                                    $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
- echo (round($percverdura)) ?>% </p>
-          <p class="textStat">verdura donata: <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+                                                                    // Caricamento delle configurazioni
+                                                                    $queryConfig = parse_ini_file($configFilePath, true);
+                                                                    echo (round($percverdura)) ?>% </p>
+          <p class="textStat">verdura donata: <?php
+                                              // Percorso al file di configurazione
+                                              $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
-echo $verdura ?> su <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+                                              // Caricamento delle configurazioni
+                                              $queryConfig = parse_ini_file($configFilePath, true);
+                                              echo $verdura ?> su <?php
+                                                                  // Percorso al file di configurazione
+                                                                  $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
-echo $obverdura ?> kg</p>
+                                                                  // Caricamento delle configurazioni
+                                                                  $queryConfig = parse_ini_file($configFilePath, true);
+                                                                  echo $obverdura ?> kg</p>
         </div>
         <div class="grid-item">
           <p class="textStat">FRUTTA:</p>
-          <div id="anelloF" class="semi-donut margin" style="--percentage :<?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+          <div id="anelloF" class="semi-donut margin" style="--percentage :<?php
+                                                                            // Percorso al file di configurazione
+                                                                            $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
- echo ($percfrutta)  ?>; --fill: #fa0a07 ;">
-            <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+                                                                            // Caricamento delle configurazioni
+                                                                            $queryConfig = parse_ini_file($configFilePath, true);
+                                                                            echo ($percfrutta)  ?>; --fill: #fa0a07 ;">
+            <?php
+            // Percorso al file di configurazione
+            $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
- echo (round($percfrutta))  ?>%
+            // Caricamento delle configurazioni
+            $queryConfig = parse_ini_file($configFilePath, true);
+            echo (round($percfrutta))  ?>%
           </div>
-          <p id="fruit" class="textStat" style="color: red;"><?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+          <p id="fruit" class="textStat" style="color: red;"><?php
+                                                              // Percorso al file di configurazione
+                                                              $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
-echo (round($percfrutta)) ?>% </p>
-          <p class="textStat">frutta donata: <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+                                                              // Caricamento delle configurazioni
+                                                              $queryConfig = parse_ini_file($configFilePath, true);
+                                                              echo (round($percfrutta)) ?>% </p>
+          <p class="textStat">frutta donata: <?php
+                                              // Percorso al file di configurazione
+                                              $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
- echo $frutta ?> su <?php 
-// Percorso al file di configurazione
-$configFilePath = '../dir_queries/queries.ini';
+                                              // Caricamento delle configurazioni
+                                              $queryConfig = parse_ini_file($configFilePath, true);
+                                              echo $frutta ?> su <?php
+                                                                  // Percorso al file di configurazione
+                                                                  $configFilePath = '../dir_queries/queries.ini';
 
-// Caricamento delle configurazioni
-$queryConfig = parse_ini_file($configFilePath, true);
-echo $obfrutta ?> kg</p>
+                                                                  // Caricamento delle configurazioni
+                                                                  $queryConfig = parse_ini_file($configFilePath, true);
+                                                                  echo $obfrutta ?> kg</p>
         </div>
 
       </div>
@@ -634,28 +629,28 @@ echo $obfrutta ?> kg</p>
 
 
     <div class="footer-basic">
-        <footer>
-            <div class="social">
-              <a href="https://www.instagram.com/"><i class="icon ion-social-instagram"></i></a>
-              <a href="https://accounts.snapchat.com/accounts/login?continue=%2Faccounts%2Fwelcome"><i class="icon ion-social-snapchat"></i></a>
-              <a href="https://twitter.com/?lang=it"><i class="icon ion-social-twitter"></i></a>
-              <a href="https://www.facebook.com/"><i class="icon ion-social-facebook"></i></a>
-            </div>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Home</a></li>
-                <li class="list-inline-item"><a href="#normaleP">Programma</a></li>
-                <li class="list-inline-item"><a href="#normaleN">News</a></li>
-                <li class="list-inline-item"><a href="#normaleC">Collaborazioni</a></li>
-                <li class="list-inline-item"><a href="https://www.governo.it/it/privacy-policy">Privacy Policy</a></li>
-            </ul>
-            <p class="copyright">What They Need © 2022</p>
-        </footer>
+      <footer>
+        <div class="social">
+          <a href="https://www.instagram.com/"><i class="icon ion-social-instagram"></i></a>
+          <a href="https://accounts.snapchat.com/accounts/login?continue=%2Faccounts%2Fwelcome"><i class="icon ion-social-snapchat"></i></a>
+          <a href="https://twitter.com/?lang=it"><i class="icon ion-social-twitter"></i></a>
+          <a href="https://www.facebook.com/"><i class="icon ion-social-facebook"></i></a>
+        </div>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Home</a></li>
+          <li class="list-inline-item"><a href="#normaleP">Programma</a></li>
+          <li class="list-inline-item"><a href="#normaleN">News</a></li>
+          <li class="list-inline-item"><a href="#normaleC">Collaborazioni</a></li>
+          <li class="list-inline-item"><a href="https://www.governo.it/it/privacy-policy">Privacy Policy</a></li>
+        </ul>
+        <p class="copyright">What They Need © 2022</p>
+      </footer>
     </div>
 
 
 
 
 
-  </body>
+</body>
 
 </html>
