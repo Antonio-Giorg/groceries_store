@@ -1,4 +1,10 @@
 <?php
+
+
+$configFilePath = '../../dir_queries/queries.ini';  // Adjust the path as needed
+    $queryConfig = parse_ini_file($configFilePath, true);
+
+
 $modifica=0;
     if($_GET){
         $modifica=1;
@@ -8,9 +14,9 @@ session_start();
 
 $_SESSION["loggato"]=0;
 if($modifica==0){
-    $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
-    $query='DELETE FROM identificativo WHERE $1=codice';
-$a=pg_query_params($dbconn, $query, array(session_id())); //Ci prendiamo la TABELLA risultante dalla query
+    $db = getenv('PG_DATABASE');
+
+$a=pg_query_params($dbconn, $queryConfig['session_queries']['delete_session'], array(session_id())); //Ci prendiamo la TABELLA risultante dalla query
 session_regenerate_id();
 }
 

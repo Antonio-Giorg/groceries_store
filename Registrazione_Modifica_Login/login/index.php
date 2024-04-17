@@ -6,10 +6,14 @@ session_start();
 
 $tuple = "nulla";
 $flag="nulla";
+    // Percorso al file di configurazione
+    $configFilePath = '../../dir_queries\queries.ini';
 
+    // Caricamento delle configurazioni
+    $queryConfig = parse_ini_file($configFilePath, true);
 #setcookie("abcdefgh", "ffffffffffffinale", time()+400,"/");
 
-$dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+$db = getenv('PG_DATABASE');
 
 
     if (isset($_POST["submit"]) || isset($_POST["email"])) {
@@ -18,9 +22,8 @@ $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres passw
         $email = $_POST["email"];
         $password = $_POST["pswd"];
 
-        $query = 'SELECT * from public.utente where email=$1 AND pswd=$2';
-        //echo $email,hash('sha256',$password);
-        $result = pg_query_params($dbconn, $query, array($email, hash('sha256',$password)));
+
+        $result = pg_query_params($dbconn, $queryConfig['login_queries']['user_authentication'], array($email, hash('sha256',$password)));
         $tuple = "nulla";
         $flag="nulla";
         $tuple = pg_fetch_array($result, null, PGSQL_ASSOC);
@@ -49,17 +52,7 @@ $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres passw
                 $_SESSION['codice'] = $tuple["codice"];
 
                 $_SESSION['loggato'] = 1;
-                /*
-                $password = 'password';
-                $metodo = 'aes';
-                $formato = 'SQL_ASCII';
-                $queryRemember = 'SELECT convert_from(decrypt($1,$2,$3),$4)';
-                $resultRemember = pg_query_params($dbconn, $queryRemember, array($tuple["nome"],$password,$metodo,$formato));
-                $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
-                $_SESSION["nome"]=$tuple["convert_from"];
-
-            
-             */
+                
 
                                             if (isset($_POST['rememberMe'])) {
 
@@ -82,26 +75,22 @@ $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres passw
                                                 $_SESSION['ricordami'] = 1;
 
                                             } else {
-                                                $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+                                                $db = getenv('PG_DATABASE');
                                                 
                                                 $id = session_id();
                                                 $codice = $_SESSION['codice'];
 
-                                                #$query='INSERT INTO company values ($1,$2,$3,$4)';
-                                                #$ris=pg_query_params($dbconn, $query, array(222,$id,$codice,'prova'));
-
                                                
-                                                $querynoRem = 'INSERT INTO identificativo values ($1,$2)';
+                                               
+                                              
                                                 
-                                                ##$ris=pg_query_params($dbconn, $querynoRem, array($id,$codice));    
-                                                $ris=pg_query_params($dbconn, $querynoRem, array($id,$codice));
+                                               
+                                                $ris=pg_query_params($dbconn, $queryConfig['login_queries']['user_authentication'], array($id,$codice));
 
 
 
                                                 
-                                               # $query2 = 'INSERT INTO utente values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
-                                               # $result = pg_query_params($dbconn, $query2, array($nome,$cognome,$email,$pswd,$cap,$cell,$cf,$città,$via,$regione));
-                                               
+                                              
 
                                                 if ($ris){
         
@@ -122,10 +111,8 @@ $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres passw
         }
     }
 
-    $queryRemember = 'SELECT public.utente.email, public.utente.pswd
-                from public.utente inner join identificativo on public.utente.codice = identificativo.codcliente
-                where identificativo.codice = $1';
-    $resultRemember = pg_query_params($dbconn, $queryRemember, array(session_id()));
+   
+    $resultRemember = pg_query_params($dbconn, $queryConfig['login_queries']['retrieve_user_session'], array(session_id()));
     $tupleRemember = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
     if ($tupleRemember) {

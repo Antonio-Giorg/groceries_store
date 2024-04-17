@@ -21,7 +21,7 @@
                    
         $a=$_COOKIE['PHPSESSID'];
                
-        $dbconn = pg_connect("host=localhost dbname=ltw_db port=5432 user=postgres password=password");
+        $db = getenv('PG_DATABASE');
         $queryRemember = 'SELECT *
         from utente inner join identificativo on utente.codice = identificativo.codcliente
         where identificativo.codice = $1';

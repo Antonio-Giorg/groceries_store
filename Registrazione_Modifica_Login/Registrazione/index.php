@@ -1,19 +1,24 @@
 <?php
 session_start();
+
+    // Percorso al file di configurazione
+    $configFilePath = '../../dir_queries\queries.ini';
+
+    // Caricamento delle configurazioni
+    $queryConfig = parse_ini_file($configFilePath, true);
+
 if(isset($_POST['submit'])){      
     $dbconn = pg_connect("host=127.0.0.1 port=5432 dbname=ltw_db user=postgres password=password");
 
     $email = $_POST["email"];
-    $query = 'SELECT * from utente where email=$1';
-    $result = pg_query_params($dbconn,$query, array($email));
+
+    $result = pg_query_params($dbconn,$queryConfig['registration_queries']['check_user_email'], array($email));
 
 
 
     if ($tuple=pg_fetch_array($result,null,PGSQL_ASSOC)){
 
-        //non usare
-        //echo "<script>if(confirm('e-mail già usata!')){document.location.href='index.php'};</script>";
-
+    
 
         echo '<script type="text/javascript">';
         echo ' alert("e-mail già usata")';  //not showing an alert box.
@@ -23,12 +28,12 @@ if(isset($_POST['submit'])){
     }else{
         $CodFisc = $_POST["cf"];
         
-        $query2 = 'SELECT * from utente where cf=$1';
-        $result2 = pg_query_params($dbconn,$query2, array($CodFisc));
+ 
+        $result2 = pg_query_params($dbconn,$queryConfig['registration_queries']['check_user_cf'], array($CodFisc));
 
         if ($tuple2=pg_fetch_array($result2,null,PGSQL_ASSOC)){
 
-        // echo "<script>if(confirm('Codice fiscale già usato!')){document.location.href='index.php'};</script>";
+     
         echo '<script type="text/javascript">';
         echo ' alert("Codice fiscale già usato")';  //not showing an alert box.
         echo '</script>';
@@ -47,38 +52,11 @@ if(isset($_POST['submit'])){
         $regione = $_POST["regione"];
 
 
-        /*
-        //vedo se il cap è già presente
-        $query2 = 'SELECT cap FROM utente WHERE cap=$1';
-        $result = pg_query_params($dbconn, $query2, array($cap));
-        $tuple = pg_fetch_array($result, null, PGSQL_ASSOC);
-        if ($tuple){ # se c'è già ok
-     
-        }else{
-       
-        // $query2 = 'INSERT INTO utente(cap) VALUES($1)';
-        // $result = pg_query_params($dbconn, $query2, array($cap));
-        }
 
-
-
-        //vedo se la citta è già presente
-        $query2 = 'SELECT città FROM utente WHERE città=$1';
-        $result = pg_query_params($dbconn, $query2, array($citta));
-        $tuple = pg_fetch_array($result, null, PGSQL_ASSOC);
-        if ($tuple){ # se c'è già ok
-     
-        }else{
-       
-        // $query2 = 'INSERT INTO utente(citta, regione) VALUES($1,$2)';
-        // $result = pg_query_params($dbconn, $query2, array($citta,$regione));
-        }*/
 
         $enc_pwd = hash('sha256',$pswd);
         $metodo = 'aes';
-
-        $query2 = 'INSERT INTO public.utente(nome,cognome,email,pswd,cap,cellulare,cf,città,via,regione) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
-        $result = pg_query_params($dbconn, $query2, array($nome,$cognome,$email,$enc_pwd,$cap,$cell,$cf,$città,$via,$regione));
+ $result = pg_query_params($dbconn, $queryConfig['registration_queries']['insert_new_user'], array($nome,$cognome,$email,$enc_pwd,$cap,$cell,$cf,$città,$via,$regione));
         if ($result){
         
             header("location: ../login/index.php");
@@ -194,7 +172,7 @@ if(isset($_POST['submit'])){
                 <label  placeholder="CAP inserito", alt="inserire il CAP" > </label>
             </div>
 
-            <!--<img id="interrogativo" class="position-relative"  src="../media/interrogativo.png"  /> -->
+          
             
             <div class="requisiti" id="req">
              <div id="testo"> Requisiti password: </div> 
