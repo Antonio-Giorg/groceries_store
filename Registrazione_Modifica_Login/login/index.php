@@ -23,7 +23,7 @@ $db = getenv('PG_DATABASE');
         $password = $_POST["pswd"];
 
 
-        $result = pg_query_params($dbconn, $queryConfig['login_queries']['user_authentication'], array($email, hash('sha256',$password)));
+        $result = pg_query_params($db, $queryConfig['login_queries']['user_authentication'], array($email, hash('sha256',$password)));
         $tuple = "nulla";
         $flag="nulla";
         $tuple = pg_fetch_array($result, null, PGSQL_ASSOC);
@@ -85,7 +85,7 @@ $db = getenv('PG_DATABASE');
                                               
                                                 
                                                
-                                                $ris=pg_query_params($dbconn, $queryConfig['login_queries']['user_authentication'], array($id,$codice));
+                                                $ris=pg_query_params($db, $queryConfig['login_queries']['user_authentication'], array($id,$codice));
 
 
 
@@ -112,7 +112,7 @@ $db = getenv('PG_DATABASE');
     }
 
    
-    $resultRemember = pg_query_params($dbconn, $queryConfig['login_queries']['retrieve_user_session'], array(session_id()));
+    $resultRemember = pg_query_params($db, $queryConfig['login_queries']['retrieve_user_session'], array(session_id()));
     $tupleRemember = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
     if ($tupleRemember) {
@@ -120,7 +120,7 @@ $db = getenv('PG_DATABASE');
         $_POST["email"] = $tupleRemember["email"];
         $_POST["pswd"] = $tupleRemember["pswd"];
     }
-pg_close($dbconn);
+pg_close($db);
 ?>
 
 

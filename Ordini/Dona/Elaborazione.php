@@ -8,7 +8,7 @@ $configFilePath = '../../dir_queries\queries.ini';
 $queryConfig = parse_ini_file($configFilePath, true);
 
   $db = getenv('PG_DATABASE');
-  $resultRemember = pg_query_params($dbconn, $queryConfig['database_queries']['fetch_user_data'], array($a));
+  $resultRemember = pg_query_params($db, $queryConfig['database_queries']['fetch_user_data'], array($a));
   $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
   
   if ($tuple) {
@@ -45,7 +45,7 @@ $db = getenv('PG_DATABASE');
 
 //Ci prendiamo i dati dei prodotti inseriti nel carrello dall'utente mediante una chiamata AJAX col GET dal JS, e mettiamo i dati dentro un array.
 $arr = explode(",", $_GET['dati']); 
-$result = pg_query_params($dbconn, $queryConfig['database_queries']['product_code_by_name'], array($arr[0]));
+$result = pg_query_params($db, $queryConfig['database_queries']['product_code_by_name'], array($arr[0]));
 
 
 
@@ -58,7 +58,7 @@ for ($i = 0; $i < count($arr) - 2; $i++) {
     /*Facciamo (prima dell'inserimento della transazione), un ulteriore query, verifichiamo se ci sono dei prodotti NUOVI (non presenti nel DB a livello di Nome/Tipologia), inseriti
     dall'utente.*/
 
-    $result = pg_query_params($dbconn, $queryConfig['database_queries']['check_product_exists'], array($arr2[0]));
+    $result = pg_query_params($db, $queryConfig['database_queries']['check_product_exists'], array($arr2[0]));
 
     //Se il prodotto è già presente nel DB semplicemente ne prendo il codice/ID/PK di riferimento.
     if ($codiceProdottoArr = pg_fetch_array($result, null, PGSQL_ASSOC)) {
@@ -70,12 +70,12 @@ for ($i = 0; $i < count($arr) - 2; $i++) {
         $NomeProdNuovo = $arr2[0];
         $TipProdNuovo = $arr2[1];
 
-        $result2 = pg_query_params($dbconn,$queryConfig['database_queries']['insert_new_product'], array($NomeProdNuovo, $TipProdNuovo));
+        $result2 = pg_query_params($db,$queryConfig['database_queries']['insert_new_product'], array($NomeProdNuovo, $TipProdNuovo));
         if (!$result2) {
             die("c'è stato un errore");
         }
 
-        $result2 = pg_query_params($dbconn, $queryConfig['database_queries']['product_code_by_name'], array($NomeProdNuovo));
+        $result2 = pg_query_params($db, $queryConfig['database_queries']['product_code_by_name'], array($NomeProdNuovo));
         if ($codiceProdottoArr = pg_fetch_array($result2, null, PGSQL_ASSOC)) {
             foreach ($codiceProdottoArr as $key => $value) {
                 $codiceProdotto = $value;
@@ -90,7 +90,7 @@ for ($i = 0; $i < count($arr) - 2; $i++) {
     $tag=$arr2[count($arr2) - 1];
 
     //Inserisco nel DB i dati inerenti alla transazione del prodotto (cosa iterata per ogni prodotto del carrello):
-   $Inserimento = pg_query_params($dbconn, $queryConfig['database_queries']['insert_transaction'], array(date("Y-m-d"), $loggato, $codiceProdotto, $quantita, $ScadProd, $indirizzo, $dataCon, $tag));
+   $Inserimento = pg_query_params($db, $queryConfig['database_queries']['insert_transaction'], array(date("Y-m-d"), $loggato, $codiceProdotto, $quantita, $ScadProd, $indirizzo, $dataCon, $tag));
 }
 if ($result) {
     $_SESSION["success"]=1;

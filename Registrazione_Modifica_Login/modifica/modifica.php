@@ -33,7 +33,7 @@ $db = getenv('PG_DATABASE');
 
 $query2= 'UPDATE utente SET nome=$1,cognome=$2,email=$3,pswd=$4,cap=$5,cellulare=$6,cf=$7,città=$8,via=$9,regione=$10  WHERE codice=$11';
 
-$result = pg_query_params($dbconn, $query2, array($nome,$cognome,$email,$password,$cap,$cellulare,$cf,$città,$via,$regione,$codice));
+$result = pg_query_params($db, $query2, array($nome,$cognome,$email,$password,$cap,$cellulare,$cf,$città,$via,$regione,$codice));
      
 if ($result){
         $modifica = 1;

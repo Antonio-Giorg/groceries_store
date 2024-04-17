@@ -25,7 +25,7 @@
         $queryRemember = 'SELECT *
         from utente inner join identificativo on utente.codice = identificativo.codcliente
         where identificativo.codice = $1';
-        $resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
+        $resultRemember = pg_query_params($db, $queryRemember, array($a));
         $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
         
         if ($tuple) {
@@ -53,7 +53,7 @@
 
 
         $queryRemember = 'SELECT convert_from(decrypt($1,$2,$3),$4)';
-        $resultRemember = pg_query_params($dbconn, $queryRemember, array($tuple["nome"],$password,$metodo,$formato));
+        $resultRemember = pg_query_params($db, $queryRemember, array($tuple["nome"],$password,$metodo,$formato));
         $tuples = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
         
         $_SESSION["nome"]=$tuples["convert_from"];

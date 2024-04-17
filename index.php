@@ -10,7 +10,7 @@
   $queryRemember = 'SELECT *
   from utente inner join identificativo on utente.codice = identificativo.codcliente
   where identificativo.codice = $1';
-  $resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
+  $resultRemember = pg_query_params($db, $queryRemember, array($a));
   $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
   if ($tuple) {
@@ -36,7 +36,7 @@
 
 
     $queryRemember = 'SELECT convert_from(decrypt($1,$2,$3),$4)';
-    $resultRemember = pg_query_params($dbconn, $queryRemember, array($tuple["nome"],$password,$metodo,$formato));
+    $resultRemember = pg_query_params($db, $queryRemember, array($tuple["nome"],$password,$metodo,$formato));
     $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
     $_SESSION["nome"]=$tuple["convert_from"];
@@ -68,7 +68,7 @@
       transazione inner join prodotto on transazione.codprodotto=prodotto.codice
       ) inner join tipologia on prodotto.codtipologia = tipologia.categoria)
       group by tipologia.categoria';
-  $result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
+  $result = pg_query_params($db, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
   $array2 = array();
   while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
     $appoggio = array_values($tuple); //Mi prendo il valore della colonna "Email" e il suo corrispettivo counting...
@@ -306,7 +306,7 @@
               $db = getenv('PG_DATABASE');
               $query = 'select sum(quantità)
                         from ((transazione inner join prodotto on transazione.codprodotto=prodotto.codice) inner join tipologia on prodotto.codtipologia = tipologia.categoria)';
-              $result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
+              $result = pg_query_params($db, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
               while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
                 print_r($tuple["sum"]);
               }
@@ -322,7 +322,7 @@
               <?php
               $db = getenv('PG_DATABASE');
               $query = 'select count(*) from transazione';
-              $result = pg_query_params($dbconn, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
+              $result = pg_query_params($db, $query, array()); //Ci prendiamo la TABELLA risultante dalla query
               while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
                 print_r($tuple["count"]);
               }
@@ -457,7 +457,7 @@
             from ((transazione inner join prodotto on transazione.codprodotto=prodotto.codice) inner join tipologia on prodotto.codtipologia = tipologia.categoria)
             group by tipologia.categoria';
 
-      $result1 = pg_query_params($dbconn, $query5, array()); //Ci prendiamo la TABELLA risultante dalla query
+      $result1 = pg_query_params($db, $query5, array()); //Ci prendiamo la TABELLA risultante dalla query
       
       while ($tuple = pg_fetch_array($result1, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
       

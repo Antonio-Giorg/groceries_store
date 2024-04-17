@@ -12,7 +12,7 @@ $configFilePath = '../../dir_queries\queries.ini';
 $queryConfig = parse_ini_file($configFilePath, true);
 
     $db = getenv('PG_DATABASE');
-    $resultRemember = pg_query_params($dbconn, $queryConfig['database_queries']['fetch_user_details'], array($a));
+    $resultRemember = pg_query_params($db, $queryConfig['database_queries']['fetch_user_details'], array($a));
     $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
     if ($tuple) {
@@ -67,7 +67,7 @@ $queryConfig = parse_ini_file($configFilePath, true);
             }
 
             $db = getenv('PG_DATABASE');
-            $result = pg_query_params($dbconn, $queryConfig['database_queries']['fetch_order_history'], array($codice)); //Ci prendiamo la TABELLA risultante dalla query
+            $result = pg_query_params($db, $queryConfig['database_queries']['fetch_order_history'], array($codice)); //Ci prendiamo la TABELLA risultante dalla query
             $array2 = array();
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) {
                 $appoggio = array_values($tuple);
@@ -85,7 +85,7 @@ $queryConfig = parse_ini_file($configFilePath, true);
             <div class="col-6" id="statistiche">
                 <?php
                 $db = getenv('PG_DATABASE');
-                $result = pg_query_params($dbconn, $queryConfig['database_queries']['calculate_totals'], array($codice)); //Ci prendiamo la TABELLA risultante dalla query
+                $result = pg_query_params($db, $queryConfig['database_queries']['calculate_totals'], array($codice)); //Ci prendiamo la TABELLA risultante dalla query
                 $array2 = array();
                 while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella risultante della query prendendone i valori.
                     $appoggio = array_values($tuple);

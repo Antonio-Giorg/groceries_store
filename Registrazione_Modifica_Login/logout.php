@@ -16,7 +16,7 @@ $_SESSION["loggato"]=0;
 if($modifica==0){
     $db = getenv('PG_DATABASE');
 
-$a=pg_query_params($dbconn, $queryConfig['session_queries']['delete_session'], array(session_id())); //Ci prendiamo la TABELLA risultante dalla query
+$a=pg_query_params($db, $queryConfig['session_queries']['delete_session'], array(session_id())); //Ci prendiamo la TABELLA risultante dalla query
 session_regenerate_id();
 }
 

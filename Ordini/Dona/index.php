@@ -7,7 +7,7 @@
     ) inner join tipologia on prodotto.codtipologia = tipologia.categoria)
     group by tipologia.categoria';
     $array2 = array();
-    $result1 = pg_query_params($dbconn, $query5, array()); //Ci prendiamo la TABELLA risultante dalla query
+    $result1 = pg_query_params($db, $query5, array()); //Ci prendiamo la TABELLA risultante dalla query
 
     while ($tuple = pg_fetch_array($result1, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
 
@@ -91,7 +91,7 @@
  $queryRemember = 'SELECT *
   from utente inner join identificativo on utente.codice = identificativo.codcliente
   where identificativo.codice = $1';
-  $resultRemember = pg_query_params($dbconn, $queryRemember, array($a));
+  $resultRemember = pg_query_params($db, $queryRemember, array($a));
   $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
   
   if ($tuple) {

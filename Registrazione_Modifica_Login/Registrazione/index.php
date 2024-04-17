@@ -8,11 +8,11 @@ session_start();
     $queryConfig = parse_ini_file($configFilePath, true);
 
 if(isset($_POST['submit'])){      
-    $dbconn = pg_connect("host=127.0.0.1 port=5432 dbname=ltw_db user=postgres password=password");
+    $db = pg_connect("host=127.0.0.1 port=5432 dbname=ltw_db user=postgres password=password");
 
     $email = $_POST["email"];
 
-    $result = pg_query_params($dbconn,$queryConfig['registration_queries']['check_user_email'], array($email));
+    $result = pg_query_params($db,$queryConfig['registration_queries']['check_user_email'], array($email));
 
 
 
@@ -29,7 +29,7 @@ if(isset($_POST['submit'])){
         $CodFisc = $_POST["cf"];
         
  
-        $result2 = pg_query_params($dbconn,$queryConfig['registration_queries']['check_user_cf'], array($CodFisc));
+        $result2 = pg_query_params($db,$queryConfig['registration_queries']['check_user_cf'], array($CodFisc));
 
         if ($tuple2=pg_fetch_array($result2,null,PGSQL_ASSOC)){
 
@@ -56,7 +56,7 @@ if(isset($_POST['submit'])){
 
         $enc_pwd = hash('sha256',$pswd);
         $metodo = 'aes';
- $result = pg_query_params($dbconn, $queryConfig['registration_queries']['insert_new_user'], array($nome,$cognome,$email,$enc_pwd,$cap,$cell,$cf,$città,$via,$regione));
+ $result = pg_query_params($db, $queryConfig['registration_queries']['insert_new_user'], array($nome,$cognome,$email,$enc_pwd,$cap,$cell,$cf,$città,$via,$regione));
         if ($result){
         
             header("location: ../login/index.php");

@@ -24,7 +24,7 @@ $queryConfig = parse_ini_file($configFilePath, true);
 
 
 
-$resultRemember = pg_query_params($dbconn, $queryConfig['database_queries']['fetch_user_data'], array($a));
+$resultRemember = pg_query_params($db, $queryConfig['database_queries']['fetch_user_data'], array($a));
 $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
 
@@ -53,7 +53,7 @@ $formato = 'SQL_ASCII';
 
 
 $queryRemember = 'SELECT convert_from(decrypt($1,$2,$3),$4)';
-$resultRemember = pg_query_params($dbconn, $queryRemember, array($tuple["nome"],$password,$metodo,$formato));
+$resultRemember = pg_query_params($db, $queryRemember, array($tuple["nome"],$password,$metodo,$formato));
 $tuple = pg_fetch_array($resultRemember, null, PGSQL_ASSOC);
 
 $_SESSION["nome"]=$tuple["convert_from"];
@@ -80,7 +80,7 @@ if(isset($_SESSION["nome"])){
 
 
 $db = getenv('PG_DATABASE');
-$result = pg_query_params($dbconn, $queryConfig['database_queries']['count_transactions'], array()); //Ci prendiamo la TABELLA risultante dalla query
+$result = pg_query_params($db, $queryConfig['database_queries']['count_transactions'], array()); //Ci prendiamo la TABELLA risultante dalla query
 $array2 = array();
 while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
   $appoggio = array_values($tuple); //Mi prendo il valore della colonna "Email" e il suo corrispettivo counting...
@@ -311,7 +311,7 @@ foreach ($array2 as $key => $value) {
           <p class="datoStat display-n">
             <?php 
             $db = getenv('PG_DATABASE');
-            $result = pg_query_params($dbconn, $queryConfig['database_queries']['sum_quantities'], array()); //Ci prendiamo la TABELLA risultante dalla query
+            $result = pg_query_params($db, $queryConfig['database_queries']['sum_quantities'], array()); //Ci prendiamo la TABELLA risultante dalla query
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
               print_r($tuple["sum"]);
             }
@@ -327,7 +327,7 @@ foreach ($array2 as $key => $value) {
             <?php
             $db = getenv('PG_DATABASE');
             
-            $result = pg_query_params($dbconn, $queryConfig['database_queries']['count_donations'], array()); //Ci prendiamo la TABELLA risultante dalla query
+            $result = pg_query_params($db, $queryConfig['database_queries']['count_donations'], array()); //Ci prendiamo la TABELLA risultante dalla query
             while ($tuple = pg_fetch_array($result, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
               print_r($tuple["count"]);
             }
@@ -464,7 +464,7 @@ foreach ($array2 as $key => $value) {
   $db = getenv('PG_DATABASE');
    
 
-    $result1 = pg_query_params($dbconn, $queryConfig['database_queries']['calculate_goals'], array()); //Ci prendiamo la TABELLA risultante dalla query
+    $result1 = pg_query_params($db, $queryConfig['database_queries']['calculate_goals'], array()); //Ci prendiamo la TABELLA risultante dalla query
 
     while ($tuple = pg_fetch_array($result1, null, PGSQL_ASSOC)) { //Scorriamo tutte le righe della tabella e le convertiamo in array singoli...
 
