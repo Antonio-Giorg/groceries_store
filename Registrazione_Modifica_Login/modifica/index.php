@@ -1,6 +1,6 @@
 <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -117,14 +117,14 @@ $dbconn = pg_connect($db);
         <p class="Explain">Nome e Cognome:</p>
         <input type="text" name="nome" class="form-control" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
 echo $nome; ?>" pattern="^[a-zA-Z]+$" required />
         <input type="text" name="cognome" class="form-control margine" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -133,7 +133,7 @@ echo $cognome; ?>" pattern="^[a-zA-Z]+$" required />
         <p class="Explain">Cellulare:</p>
         <input type="text" name="cell" class="form-control margine" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -142,7 +142,7 @@ echo $cellulare;  ?>" maxlength="10" pattern="[0-9]{10}$" required />
         <p class="Explain">Codice Fiscale:</p>
         <input type="text" name="cf" class="form-control margine" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -151,7 +151,7 @@ echo $cf;  ?>" pattern="^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-z
         <p class="Explain">Email e Password:</p>
         <input type="email" name="email" class="form-control margine" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -159,7 +159,7 @@ echo $email;  ?>" required />
         <div>
             <input type="password" class="form-control margine" name="pswd" id="pass" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -170,7 +170,7 @@ echo $password  ?>" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+
         <p class="Explain">Regione:</p>
         <input class="box margine" id="boxRegione" list="Regione" name="regione" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -202,14 +202,14 @@ echo $regione; ?>">
         <p class="Explain">Indirizzo Domicilio:</p>
         <input type="text" class="form-control" name="città" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
 echo $città;  ?>" pattern="^[a-zA-Z]+$" required>
         <input type="text" class="form-control margine" name="via" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -221,7 +221,7 @@ echo $via;  ?>" pattern="^[a-zA-Z\s]+[0-9]*" required>
             <label for="cap" class="Explain">CAP (5 cifre):</label>
             <input type="text" name="cap" maxlength=5 size=5 value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);

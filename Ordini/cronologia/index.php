@@ -1,7 +1,7 @@
 <?php
     session_start();
 // Percorso al file di configurazione
-$configFilePath = '../../dir_queries\queries.ini';
+$configFilePath = '../../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);

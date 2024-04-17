@@ -3,7 +3,7 @@
 
 <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -215,7 +215,7 @@ foreach ($array2 as $key => $value) {
       <p id="TestoSlogan">"Fare una cosa SEMPLICE, per un gesto SEMPLICE"</p>
       <input id="success" value="<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -306,7 +306,7 @@ $queryConfig = parse_ini_file($configFilePath, true);
           <p class="datoStat display-n">
             <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -527,7 +527,7 @@ $dbconn = pg_connect($db);
             echo ($percpasta) ?>; --fill: #ebdc1c ;">
             <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -535,20 +535,20 @@ $queryConfig = parse_ini_file($configFilePath, true);
           </div>
           <p id="paste" class="textStat" style="color: orange;"><?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
  echo (round($percpasta)) ?>% </p>
           <p class="textStat">pasta donata: <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
  echo $pasta ?> su <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -560,7 +560,7 @@ echo $obpasta ?> kg</p>
             echo ($percverdura) ?>; --fill: #17dc49 ;">
             <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -568,20 +568,20 @@ $queryConfig = parse_ini_file($configFilePath, true);
           </div>
           <p id="vegetable" class="textStat" style="color: green;"><?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
  echo (round($percverdura)) ?>% </p>
           <p class="textStat">verdura donata: <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
 echo $verdura ?> su <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -591,14 +591,14 @@ echo $obverdura ?> kg</p>
           <p class="textStat">FRUTTA:</p>
           <div id="anelloF" class="semi-donut margin" style="--percentage :<?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
  echo ($percfrutta)  ?>; --fill: #fa0a07 ;">
             <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
@@ -606,20 +606,20 @@ $queryConfig = parse_ini_file($configFilePath, true);
           </div>
           <p id="fruit" class="textStat" style="color: red;"><?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
 echo (round($percfrutta)) ?>% </p>
           <p class="textStat">frutta donata: <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
  echo $frutta ?> su <?php 
 // Percorso al file di configurazione
-$configFilePath = '../dir_queries\queries.ini';
+$configFilePath = '../dir_queries/queries.ini';
 
 // Caricamento delle configurazioni
 $queryConfig = parse_ini_file($configFilePath, true);
